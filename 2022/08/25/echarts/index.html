@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>echarts | Ando's blog</title><meta name="keywords" content="echarts"><meta name="author" content="Ando"><meta name="copyright" content="Ando"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="ECharts 基础使用 本文代码中令myChart为一个echarts实例(echartsInstance) 基本原理为先设置好装图表的容器，然后再在option中指定图表的配置项和数据 最后通过 myChart.setOption(option)显示图表  图表容器及大小初始化先在html中定义一个有宽度，高度的div节点，通过下列代码初始化一个echarts实例 1var myChart &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="echarts">
+<meta property="og:url" content="http://example.com/2022/08/25/echarts/index.html">
+<meta property="og:site_name" content="Ando&#39;s blog">
+<meta property="og:description" content="ECharts 基础使用 本文代码中令myChart为一个echarts实例(echartsInstance) 基本原理为先设置好装图表的容器，然后再在option中指定图表的配置项和数据 最后通过 myChart.setOption(option)显示图表  图表容器及大小初始化先在html中定义一个有宽度，高度的div节点，通过下列代码初始化一个echarts实例 1var myChart &#x3D;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s3.bmp.ovh/imgs/2022/08/25/60a77d19369c9b39.jpgCC">
+<meta property="article:published_time" content="2022-08-25T02:14:53.000Z">
+<meta property="article:modified_time" content="2022-08-25T02:55:17.372Z">
+<meta property="article:author" content="Ando">
+<meta property="article:tag" content="echarts">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s3.bmp.ovh/imgs/2022/08/25/60a77d19369c9b39.jpgCC"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/08/25/echarts/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'echarts',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-08-25 10:55:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s1.ax1x.com/2022/08/16/v0iAfg.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s3.bmp.ovh/imgs/2022/08/25/60a77d19369c9b39.jpgCC')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Ando's blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">echarts</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-08-25T02:14:53.000Z" title="发表于 2022-08-25 10:14:53">2022-08-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-08-25T02:55:17.372Z" title="更新于 2022-08-25 10:55:17">2022-08-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BB%84%E4%BB%B6%E5%AD%A6%E4%B9%A0/">组件学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="echarts"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="ECharts-基础使用"><a href="#ECharts-基础使用" class="headerlink" title="ECharts 基础使用"></a>ECharts 基础使用</h1><blockquote>
+<p>本文代码中令myChart为一个echarts实例(echartsInstance)</p>
+<p>基本原理为先设置好装图表的容器，然后再在option中指定图表的配置项和数据</p>
+<p>最后通过 myChart.setOption(option)显示图表</p>
+</blockquote>
+<h2 id="图表容器及大小"><a href="#图表容器及大小" class="headerlink" title="图表容器及大小"></a>图表容器及大小</h2><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>先在html中定义一个有宽度，高度的div节点，通过下列代码初始化一个echarts实例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var myChart = echarts.init(document.getElementById(&#x27;xxx&#x27;));</span><br></pre></td></tr></table></figure>
+
+<p>也可以为不存在宽度高度的容器指定宽度，高度</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var myChart = echarts.init(document.getElementById(&#x27;main&#x27;), null, &#123;</span><br><span class="line">	width: 600,</span><br><span class="line">	height: 400</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="响应容器大小"><a href="#响应容器大小" class="headerlink" title="响应容器大小"></a>响应容器大小</h3><p>让图表大小实时根据容器的大小进行变化</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var myChart = echarts.init(document.getElementById(&#x27;main&#x27;));</span><br><span class="line">window.onresize = function() &#123;</span><br><span class="line">	myChart.resize(&#123;</span><br><span class="line">  		width: 800,</span><br><span class="line">  		height: 400</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="销毁容器节点"><a href="#销毁容器节点" class="headerlink" title="销毁容器节点"></a>销毁容器节点</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myChart.dispose()</span><br></pre></td></tr></table></figure>
+
+<h2 id="坐标轴"><a href="#坐标轴" class="headerlink" title="坐标轴"></a>坐标轴</h2><h3 id="x轴-y轴"><a href="#x轴-y轴" class="headerlink" title="x轴 y轴"></a>x轴 y轴</h3><p>xAxis, yAxis</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">option = &#123;</span><br><span class="line">  xAxis: &#123;</span><br><span class="line">    type: &#x27;time&#x27;,</span><br><span class="line">    name: &#x27;销售时间&#x27;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;,</span><br><span class="line">  yAxis: &#123;</span><br><span class="line">    type: &#x27;value&#x27;,</span><br><span class="line">    name: &#x27;销售数量&#x27;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line">  // ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="轴线"><a href="#轴线" class="headerlink" title="轴线"></a>轴线</h3><p>利用axisLine设置轴线的样式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">xAxis: &#123;</span><br><span class="line">	axisLine: &#123;</span><br><span class="line">		symbol: &#x27;arrow&#x27;,</span><br><span class="line">		length: 6	//调整刻度</span><br><span class="line">		lineStyle: &#123;</span><br><span class="line">            type: &#x27;dashed&#x27;</span><br><span class="line">            //...</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="刻度标签"><a href="#刻度标签" class="headerlink" title="刻度标签"></a>刻度标签</h3><p>利用axisLabel配置标签</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">xAxis: &#123;</span><br><span class="line">	axisLabel: &#123;</span><br><span class="line">        formatter: &#x27;&#123;value&#125; kg&#x27;,</span><br><span class="line">        align: &#x27;center&#x27;</span><br><span class="line">        // ...</span><br><span class="line">    &#125;</span><br><span class="line">    // ...</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h2><h3 id="在系列中设置数据"><a href="#在系列中设置数据" class="headerlink" title="在系列中设置数据"></a>在系列中设置数据</h3><p>将数据设置在series中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">option = &#123;</span><br><span class="line">  xAxis: &#123;</span><br><span class="line">    type: &#x27;category&#x27;,</span><br><span class="line">    data: [&#x27;Matcha Latte&#x27;, &#x27;Milk Tea&#x27;, &#x27;Cheese Cocoa&#x27;, &#x27;Walnut Brownie&#x27;]</span><br><span class="line">  &#125;,</span><br><span class="line">  yAxis: &#123;&#125;,</span><br><span class="line">  series: [</span><br><span class="line">    &#123;</span><br><span class="line">      type: &#x27;bar&#x27;,</span><br><span class="line">      name: &#x27;2015&#x27;,</span><br><span class="line">      data: [89.3, 92.1, 94.4, 85.4]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      type: &#x27;bar&#x27;,</span><br><span class="line">      name: &#x27;2016&#x27;,</span><br><span class="line">      data: [95.8, 89.4, 91.2, 76.9]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      type: &#x27;bar&#x27;,</span><br><span class="line">      name: &#x27;2017&#x27;,</span><br><span class="line">      data: [97.7, 83.1, 92.5, 78.1]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>实际应用可参考官方文档中的示例：<a target="_blank" rel="noopener" href="https://echarts.apache.org/handbook/zh/get-started">https://echarts.apache.org/handbook/zh/get-started</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Ando</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/08/25/echarts/">http://example.com/2022/08/25/echarts/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Ando's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/echarts/">echarts</a></div><div class="post_share"><div class="social-share" data-image="https://s3.bmp.ovh/imgs/2022/08/25/60a77d19369c9b39.jpgCC" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/08/19/django-3/"><img class="next-cover" src="https://s1.ax1x.com/2022/08/18/vDTZz8.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">从零开始学django-3</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s1.ax1x.com/2022/08/16/v0iAfg.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Ando</div><div class="author-info__description">生活历险 并肩莽莽原野荒</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Ando233"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ECharts-%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">ECharts 基础使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E8%A1%A8%E5%AE%B9%E5%99%A8%E5%8F%8A%E5%A4%A7%E5%B0%8F"><span class="toc-number">1.1.</span> <span class="toc-text">图表容器及大小</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.1.1.</span> <span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%8D%E5%BA%94%E5%AE%B9%E5%99%A8%E5%A4%A7%E5%B0%8F"><span class="toc-number">1.1.2.</span> <span class="toc-text">响应容器大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%80%E6%AF%81%E5%AE%B9%E5%99%A8%E8%8A%82%E7%82%B9"><span class="toc-number">1.1.3.</span> <span class="toc-text">销毁容器节点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9D%90%E6%A0%87%E8%BD%B4"><span class="toc-number">1.2.</span> <span class="toc-text">坐标轴</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#x%E8%BD%B4-y%E8%BD%B4"><span class="toc-number">1.2.1.</span> <span class="toc-text">x轴 y轴</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%B4%E7%BA%BF"><span class="toc-number">1.2.2.</span> <span class="toc-text">轴线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%BB%E5%BA%A6%E6%A0%87%E7%AD%BE"><span class="toc-number">1.2.3.</span> <span class="toc-text">刻度标签</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-number">1.3.</span> <span class="toc-text">数据集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E7%B3%BB%E5%88%97%E4%B8%AD%E8%AE%BE%E7%BD%AE%E6%95%B0%E6%8D%AE"><span class="toc-number">1.3.1.</span> <span class="toc-text">在系列中设置数据</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/08/25/echarts/" title="echarts"><img src="https://s3.bmp.ovh/imgs/2022/08/25/60a77d19369c9b39.jpgCC" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="echarts"/></a><div class="content"><a class="title" href="/2022/08/25/echarts/" title="echarts">echarts</a><time datetime="2022-08-25T02:14:53.000Z" title="发表于 2022-08-25 10:14:53">2022-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/19/django-3/" title="从零开始学django-3"><img src="https://s1.ax1x.com/2022/08/18/vDTZz8.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从零开始学django-3"/></a><div class="content"><a class="title" href="/2022/08/19/django-3/" title="从零开始学django-3">从零开始学django-3</a><time datetime="2022-08-19T07:38:18.000Z" title="发表于 2022-08-19 15:38:18">2022-08-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/19/cf815/" title="cf815"><img src="https://s1.ax1x.com/2022/08/19/vrw3sU.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="cf815"/></a><div class="content"><a class="title" href="/2022/08/19/cf815/" title="cf815">cf815</a><time datetime="2022-08-19T02:23:24.000Z" title="发表于 2022-08-19 10:23:24">2022-08-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/18/django-2/" title="从零开始学django-2"><img src="https://s1.ax1x.com/2022/08/18/vDTZz8.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从零开始学django-2"/></a><div class="content"><a class="title" href="/2022/08/18/django-2/" title="从零开始学django-2">从零开始学django-2</a><time datetime="2022-08-18T08:15:16.000Z" title="发表于 2022-08-18 16:15:16">2022-08-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/16/lexer/" title="从零开始搭建一个小编译器(1)"><img src="https://s1.ax1x.com/2022/08/16/v0lv9A.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从零开始搭建一个小编译器(1)"/></a><div class="content"><a class="title" href="/2022/08/16/lexer/" title="从零开始搭建一个小编译器(1)">从零开始搭建一个小编译器(1)</a><time datetime="2022-08-16T06:45:23.000Z" title="发表于 2022-08-16 14:45:23">2022-08-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Ando</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
