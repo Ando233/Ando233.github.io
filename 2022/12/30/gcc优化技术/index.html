@@ -1,0 +1,187 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>gcc优化技术 | Ando's blog</title><meta name="keywords" content="compiler_pass"><meta name="author" content="Ando"><meta name="copyright" content="Ando"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="GCC优化技术简析  gcc优化等级从O0-O3（Os约为O2.5），每个等级都是在之前的优化基础上再进行优化  GCC O0不做任何优化 GCC O1defer-pop这个优化应用在汇编层面上(后端优化)，一般情况下, 函数的输入值被保存在堆栈中并且被函数访问，函数返回之后，输入值被立即弹出堆栈。这个选项允许函数返回时, 输入值还在堆栈中。等到多个函数调用后，一起弹出 merge-constan">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gcc优化技术">
+<meta property="og:url" content="http://example.com/2022/12/30/gcc%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/index.html">
+<meta property="og:site_name" content="Ando&#39;s blog">
+<meta property="og:description" content="GCC优化技术简析  gcc优化等级从O0-O3（Os约为O2.5），每个等级都是在之前的优化基础上再进行优化  GCC O0不做任何优化 GCC O1defer-pop这个优化应用在汇编层面上(后端优化)，一般情况下, 函数的输入值被保存在堆栈中并且被函数访问，函数返回之后，输入值被立即弹出堆栈。这个选项允许函数返回时, 输入值还在堆栈中。等到多个函数调用后，一起弹出 merge-constan">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2022/08/16/v0KffI.jpg">
+<meta property="article:published_time" content="2022-12-30T07:22:35.000Z">
+<meta property="article:modified_time" content="2022-12-30T08:39:12.533Z">
+<meta property="article:author" content="Ando">
+<meta property="article:tag" content="compiler_pass">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2022/08/16/v0KffI.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/12/30/gcc%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'gcc优化技术',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-12-30 16:39:12'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s1.ax1x.com/2022/08/16/v0iAfg.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s1.ax1x.com/2022/08/16/v0KffI.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Ando's blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">gcc优化技术</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-12-30T07:22:35.000Z" title="发表于 2022-12-30 15:22:35">2022-12-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-12-30T08:39:12.533Z" title="更新于 2022-12-30 16:39:12">2022-12-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/compiler/">compiler</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="gcc优化技术"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="GCC优化技术简析"><a href="#GCC优化技术简析" class="headerlink" title="GCC优化技术简析"></a>GCC优化技术简析</h1><p><a target="_blank" rel="noopener" href="https://postimg.cc/BXr0PrtZ"><img src="https://i.postimg.cc/K8zvwF2T/7269t1.jpg" alt="7269t1.jpg"></a></p>
+<blockquote>
+<p>gcc优化等级从O0-O3（Os约为O2.5），每个等级都是在之前的优化基础上再进行优化</p>
+</blockquote>
+<h2 id="GCC-O0"><a href="#GCC-O0" class="headerlink" title="GCC O0"></a>GCC O0</h2><p>不做任何优化</p>
+<h2 id="GCC-O1"><a href="#GCC-O1" class="headerlink" title="GCC O1"></a>GCC O1</h2><h3 id="defer-pop"><a href="#defer-pop" class="headerlink" title="defer-pop"></a>defer-pop</h3><p>这个优化应用在汇编层面上(后端优化)，一般情况下, 函数的输入值被保存在堆栈中并且被函数访问，函数返回之后，输入值被立即弹出堆栈。这个选项允许函数返回时, 输入值还在堆栈中。等到多个函数调用后，一起弹出</p>
+<h3 id="merge-constans"><a href="#merge-constans" class="headerlink" title="merge-constans"></a>merge-constans</h3><p>合并相同的常量(即常量折叠)</p>
+<h3 id="thread-jumps"><a href="#thread-jumps" class="headerlink" title="thread-jumps"></a>thread-jumps</h3><p>合并连续的jump为一个jump</p>
+<h3 id="loop-optimize"><a href="#loop-optimize" class="headerlink" title="loop-optimize"></a>loop-optimize</h3><p>循环不变量外提</p>
+<h3 id="if-conversion"><a href="#if-conversion" class="headerlink" title="if-conversion"></a>if-conversion</h3><p>通过减少或者删除条件分支, 以及使用条件传送，设置标志和使用运算技巧来替换他们, 编译<br>器可以减少if-then语句中花费的时间量。</p>
+<h3 id="if-conversion2"><a href="#if-conversion2" class="headerlink" title="if-conversion2"></a>if-conversion2</h3><p>if-conversion的基础上结合更高的数学特性</p>
+<h3 id="delayed-branch"><a href="#delayed-branch" class="headerlink" title="delayed-branch"></a>delayed-branch</h3><p>试图根据指令周期时间重新安排指令。 它还试图把尽可能多的指令移动到条件分支前, 以便最充分的利用处理器的延迟槽。</p>
+<h3 id="guess-branch-probability"><a href="#guess-branch-probability" class="headerlink" title="guess-branch-probability"></a>guess-branch-probability</h3><p>试图确定条件分支最可能的结果, 并且相应的移动指令, 这和延迟分支技术类似。</p>
+<h3 id="cprop-registers-没太看懂"><a href="#cprop-registers-没太看懂" class="headerlink" title="cprop-registers(没太看懂)"></a>cprop-registers(没太看懂)</h3><p>因为在函数中把寄存器分配给变量, 所以编译器执行第二次检查以便减少调度依赖性(两个段要求使用相同的寄存器)并且删除不必要的寄存器复制操作。</p>
+<h2 id="GCC-O2"><a href="#GCC-O2" class="headerlink" title="GCC O2"></a>GCC O2</h2><h3 id="force-mem-没太看懂"><a href="#force-mem-没太看懂" class="headerlink" title="force-mem(没太看懂)"></a>force-mem(没太看懂)</h3><p>在做算术操作前，强制将内存数据copy到寄存器中以后再执行。这会使所有的内存引用潜在的共同表达式，进而产出更高效的代码。</p>
+<h3 id="optimize-sibling-calls"><a href="#optimize-sibling-calls" class="headerlink" title="optimize-sibling-calls"></a>optimize-sibling-calls</h3><p>递归函数展开</p>
+<h3 id="strength-reduce"><a href="#strength-reduce" class="headerlink" title="strength-reduce"></a>strength-reduce</h3><p>这种优化技术对循环执行优化并且删除迭代变量。 迭代变量是捆绑到循环计数器的变量, 比如使用变量, 然后使用循环计数器变量执行数学操作的for-next循环。 </p>
+<h3 id="cse-follow-jumps-cse-skip-blocks"><a href="#cse-follow-jumps-cse-skip-blocks" class="headerlink" title="cse-follow-jumps+cse-skip-blocks"></a>cse-follow-jumps+cse-skip-blocks</h3><p>感觉可以大致理解为SVN(比LVN强，比GVN弱)</p>
+<h3 id="rerun-cse-after-loop"><a href="#rerun-cse-after-loop" class="headerlink" title="rerun-cse-after-loop"></a>rerun-cse-after-loop</h3><p>循环优化后再跑公共子表达式消除</p>
+<h3 id="rerun-loop-opt"><a href="#rerun-loop-opt" class="headerlink" title="rerun-loop-opt"></a>rerun-loop-opt</h3><p>再跑一遍循环优化</p>
+<h3 id="gcse"><a href="#gcse" class="headerlink" title="gcse"></a>gcse</h3><p>全局公共子表达式删除</p>
+<h3 id="gcse-lm"><a href="#gcse-lm" class="headerlink" title="gcse-lm"></a>gcse-lm</h3><p>全局子表达式+试图将循环内部的load移至循环外，在循环内使用move&#x2F;store</p>
+<h3 id="gcse-sm"><a href="#gcse-sm" class="headerlink" title="gcse-sm"></a>gcse-sm</h3><p>试图将循环内部的store移到循环外</p>
+<h3 id="gcse-las"><a href="#gcse-las" class="headerlink" title="gcse-las"></a>gcse-las</h3><p>试图消除store后面不必要的load(同一块内存区域)</p>
+<h3 id="delete-null-pointer-checks"><a href="#delete-null-pointer-checks" class="headerlink" title="delete-null-pointer-checks"></a>delete-null-pointer-checks</h3><p>通过数据流分析，删除无用的对空指针的检查</p>
+<h3 id="expensive-optimizations"><a href="#expensive-optimizations" class="headerlink" title="expensive-optimizations"></a>expensive-optimizations</h3><p>具体不是很清楚()</p>
+<h3 id="regmove"><a href="#regmove" class="headerlink" title="regmove"></a>regmove</h3><p>编译器试图重新分配move指令或者其他类似操作数等简单指令的寄存器数目，以便最大化的捆绑寄存器的数目。这种优化尤其对双操作数指令的机器帮助较大。 </p>
+<h3 id="schedule-insns"><a href="#schedule-insns" class="headerlink" title="schedule-insns"></a>schedule-insns</h3><p>编译器尝试重新排列指令，用以消除由于等待未准备好的数据而产生的延迟。这种优化将对慢浮点运算的机器以及需要load memory的指令的执行有所帮助，因为此时允许其他指令执行，直到load memory的指令完成，或浮点运算的指令再次需要cpu。</p>
+<h3 id="schedule-insns2"><a href="#schedule-insns2" class="headerlink" title="schedule-insns2"></a>schedule-insns2</h3><p>与-fschedule-insns相似。但是当寄存器分配完成后，会请求一个附加的指令计划pass。这种优化对寄存器较小，并且load memory操作时间大于一个时钟周期的机器有非常好的效果。</p>
+<h3 id="sched-interblock"><a href="#sched-interblock" class="headerlink" title="sched-interblock"></a>sched-interblock</h3><p>编译器能够跨越指令块调度指令。 这可以非常灵活地移动指令以便等待期间完成的工作最大化。</p>
+<h3 id="sched-spec-load"><a href="#sched-spec-load" class="headerlink" title="sched-spec-load"></a>sched-spec-load</h3><p>允许一些load指令进行一些投机性的动作。（具体不详）相同功能的还有-fsched-spec-load-dangerous，允许更多的load指令进行投机性操作。这两个选项在选中-fschedule-insns时默认打开。 </p>
+<h3 id="peephole2"><a href="#peephole2" class="headerlink" title="peephole2"></a>peephole2</h3><p>这个选项允许进行任何计算机特定的窥孔优化。</p>
+<h3 id="caller-saves"><a href="#caller-saves" class="headerlink" title="caller-saves"></a>caller-saves</h3><p>这个选项指示编译器对函数调用保存和恢复寄存器, 使函数能够访问寄存器值, 而且不必保存和恢复他们。 如果调用多个函数, 这样能够节省时间, 因为只进行一次寄存器的保存和恢复操作, 而不是在每个函数调用中都进行。</p>
+<h3 id="reorder-blocks"><a href="#reorder-blocks" class="headerlink" title="reorder-blocks"></a>reorder-blocks</h3><p>这种优化技术允许重新安排指令块以便改进分支操作和代码局部性。</p>
+<h3 id="crossjumping"><a href="#crossjumping" class="headerlink" title="crossjumping"></a>crossjumping</h3><p>这是对跨越跳转的转换代码处理， 以便组合分散在程序各处的相同代码。 这样可以减少代码的长度， 但是也许不会对程序性能有直接影响。</p>
+<h3 id="unit-at-a-time"><a href="#unit-at-a-time" class="headerlink" title="unit-at-a-time"></a><strong>unit-at-a-time</strong></h3><p>这种优化技术指示编译器在运行优化例程之前读取整个汇编语言代码。 这使编译器可以<br>重新安排不消耗大量时间的代码以便优化指令缓存。 但是, 这会在编译时花费相当多的内存, 对于小型计算机可能<br>是一个问题。</p>
+<h2 id="GCC-O3"><a href="#GCC-O3" class="headerlink" title="GCC O3"></a>GCC O3</h2><h3 id="inline-functions"><a href="#inline-functions" class="headerlink" title="inline-functions"></a>inline-functions</h3><p>函数内联</p>
+<h3 id="rename-registers"><a href="#rename-registers" class="headerlink" title="rename-registers"></a>rename-registers</h3><p>在寄存器分配后，通过使用registers left over来避免预定代码中的虚假依赖。这会使调试变得非常困难，因为变量不再存放于原本的寄存器中了。</p>
+<h3 id="align-functions"><a href="#align-functions" class="headerlink" title="align-functions"></a>align-functions</h3><p>这个选项用于使函数对准内存中特定边界的开始位置。 大多数处理器按照页面读取内存，并且确保全部函数代码位于单一内存页面内, 就不需要叫化代码所需的页面。 </p>
+<h3 id="align-jumps"><a href="#align-jumps" class="headerlink" title="align-jumps"></a>align-jumps</h3><p>对齐分支代码到2的n次方边界。在这种情况下，无需执行傀儡指令（dummy operations） </p>
+<h3 id="align-loops"><a href="#align-loops" class="headerlink" title="align-loops"></a>align-loops</h3><p>对齐循环到2的n次幂边界。期望可以对循环执行多次，用以补偿运行dummy operations所花费的时间。 </p>
+<h3 id="align-labels"><a href="#align-labels" class="headerlink" title="align-labels"></a>align-labels</h3><p>对齐分支到2的n次幂边界。这种选项容易使代码速度变慢，原因是需要插入一些dummy operations当分支抵达usual flow of the code. </p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Ando</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/12/30/gcc%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/">http://example.com/2022/12/30/gcc%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Ando's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/compiler-pass/">compiler_pass</a></div><div class="post_share"><div class="social-share" data-image="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/12/29/GoLang-1/"><img class="next-cover" src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">GoLang-1</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s1.ax1x.com/2022/08/16/v0iAfg.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Ando</div><div class="author-info__description">生活历险 并肩莽莽原野荒</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Ando233"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GCC%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E7%AE%80%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">GCC优化技术简析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#GCC-O0"><span class="toc-number">1.1.</span> <span class="toc-text">GCC O0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GCC-O1"><span class="toc-number">1.2.</span> <span class="toc-text">GCC O1</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#defer-pop"><span class="toc-number">1.2.1.</span> <span class="toc-text">defer-pop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#merge-constans"><span class="toc-number">1.2.2.</span> <span class="toc-text">merge-constans</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#thread-jumps"><span class="toc-number">1.2.3.</span> <span class="toc-text">thread-jumps</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#loop-optimize"><span class="toc-number">1.2.4.</span> <span class="toc-text">loop-optimize</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#if-conversion"><span class="toc-number">1.2.5.</span> <span class="toc-text">if-conversion</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#if-conversion2"><span class="toc-number">1.2.6.</span> <span class="toc-text">if-conversion2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#delayed-branch"><span class="toc-number">1.2.7.</span> <span class="toc-text">delayed-branch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#guess-branch-probability"><span class="toc-number">1.2.8.</span> <span class="toc-text">guess-branch-probability</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cprop-registers-%E6%B2%A1%E5%A4%AA%E7%9C%8B%E6%87%82"><span class="toc-number">1.2.9.</span> <span class="toc-text">cprop-registers(没太看懂)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GCC-O2"><span class="toc-number">1.3.</span> <span class="toc-text">GCC O2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#force-mem-%E6%B2%A1%E5%A4%AA%E7%9C%8B%E6%87%82"><span class="toc-number">1.3.1.</span> <span class="toc-text">force-mem(没太看懂)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#optimize-sibling-calls"><span class="toc-number">1.3.2.</span> <span class="toc-text">optimize-sibling-calls</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#strength-reduce"><span class="toc-number">1.3.3.</span> <span class="toc-text">strength-reduce</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cse-follow-jumps-cse-skip-blocks"><span class="toc-number">1.3.4.</span> <span class="toc-text">cse-follow-jumps+cse-skip-blocks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rerun-cse-after-loop"><span class="toc-number">1.3.5.</span> <span class="toc-text">rerun-cse-after-loop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rerun-loop-opt"><span class="toc-number">1.3.6.</span> <span class="toc-text">rerun-loop-opt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gcse"><span class="toc-number">1.3.7.</span> <span class="toc-text">gcse</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gcse-lm"><span class="toc-number">1.3.8.</span> <span class="toc-text">gcse-lm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gcse-sm"><span class="toc-number">1.3.9.</span> <span class="toc-text">gcse-sm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gcse-las"><span class="toc-number">1.3.10.</span> <span class="toc-text">gcse-las</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#delete-null-pointer-checks"><span class="toc-number">1.3.11.</span> <span class="toc-text">delete-null-pointer-checks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#expensive-optimizations"><span class="toc-number">1.3.12.</span> <span class="toc-text">expensive-optimizations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#regmove"><span class="toc-number">1.3.13.</span> <span class="toc-text">regmove</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#schedule-insns"><span class="toc-number">1.3.14.</span> <span class="toc-text">schedule-insns</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#schedule-insns2"><span class="toc-number">1.3.15.</span> <span class="toc-text">schedule-insns2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sched-interblock"><span class="toc-number">1.3.16.</span> <span class="toc-text">sched-interblock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sched-spec-load"><span class="toc-number">1.3.17.</span> <span class="toc-text">sched-spec-load</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#peephole2"><span class="toc-number">1.3.18.</span> <span class="toc-text">peephole2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#caller-saves"><span class="toc-number">1.3.19.</span> <span class="toc-text">caller-saves</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#reorder-blocks"><span class="toc-number">1.3.20.</span> <span class="toc-text">reorder-blocks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#crossjumping"><span class="toc-number">1.3.21.</span> <span class="toc-text">crossjumping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#unit-at-a-time"><span class="toc-number">1.3.22.</span> <span class="toc-text">unit-at-a-time</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GCC-O3"><span class="toc-number">1.4.</span> <span class="toc-text">GCC O3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#inline-functions"><span class="toc-number">1.4.1.</span> <span class="toc-text">inline-functions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rename-registers"><span class="toc-number">1.4.2.</span> <span class="toc-text">rename-registers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#align-functions"><span class="toc-number">1.4.3.</span> <span class="toc-text">align-functions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#align-jumps"><span class="toc-number">1.4.4.</span> <span class="toc-text">align-jumps</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#align-loops"><span class="toc-number">1.4.5.</span> <span class="toc-text">align-loops</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#align-labels"><span class="toc-number">1.4.6.</span> <span class="toc-text">align-labels</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/12/30/gcc%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/" title="gcc优化技术"><img src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="gcc优化技术"/></a><div class="content"><a class="title" href="/2022/12/30/gcc%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/" title="gcc优化技术">gcc优化技术</a><time datetime="2022-12-30T07:22:35.000Z" title="发表于 2022-12-30 15:22:35">2022-12-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/29/GoLang-1/" title="GoLang-1"><img src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GoLang-1"/></a><div class="content"><a class="title" href="/2022/12/29/GoLang-1/" title="GoLang-1">GoLang-1</a><time datetime="2022-12-29T15:12:40.000Z" title="发表于 2022-12-29 23:12:40">2022-12-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/15/%E8%BD%AF%E5%B7%A5-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80/" title="软工系统分析与设计-1"><img src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="软工系统分析与设计-1"/></a><div class="content"><a class="title" href="/2022/12/15/%E8%BD%AF%E5%B7%A5-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80/" title="软工系统分析与设计-1">软工系统分析与设计-1</a><time datetime="2022-12-15T10:31:24.000Z" title="发表于 2022-12-15 18:31:24">2022-12-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/19/acmTrick/" title="acmTrick.md"><img src="https://s1.ax1x.com/2022/08/19/vrw3sU.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="acmTrick.md"/></a><div class="content"><a class="title" href="/2022/10/19/acmTrick/" title="acmTrick.md">acmTrick.md</a><time datetime="2022-10-19T05:44:35.000Z" title="发表于 2022-10-19 13:44:35">2022-10-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/12/graph-coloring-register-allocation-md/" title="图着色寄存器分配算法"><img src="https://i.postimg.cc/Y21hsXq2/2eeeadee556389da8c8d2c065fb02da.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="图着色寄存器分配算法"/></a><div class="content"><a class="title" href="/2022/10/12/graph-coloring-register-allocation-md/" title="图着色寄存器分配算法">图着色寄存器分配算法</a><time datetime="2022-10-12T07:44:40.000Z" title="发表于 2022-10-12 15:44:40">2022-10-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Ando</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
