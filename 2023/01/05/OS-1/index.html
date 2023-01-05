@@ -1,0 +1,250 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>OS-1 | Ando's blog</title><meta name="keywords" content="OS"><meta name="author" content="Ando"><meta name="copyright" content="Ando"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="CPU三种工作模式实模式特点 运行真实的指令 发往内存的地址是真实的  实模式寄存器下面是x86 CPU实模式下的寄存器，均为16位    寄存器 描述    AX, BX, CX, DX, DI, SI, BP 通用寄存器   IP 指向下一条指令的地址   SP 栈指针寄存器，始终指向栈顶   CS, DS, ES, SS 段寄存器，存放一个内存段的基地址   FLAGS 存放CPU运算产生的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS-1">
+<meta property="og:url" content="http://example.com/2023/01/05/OS-1/index.html">
+<meta property="og:site_name" content="Ando&#39;s blog">
+<meta property="og:description" content="CPU三种工作模式实模式特点 运行真实的指令 发往内存的地址是真实的  实模式寄存器下面是x86 CPU实模式下的寄存器，均为16位    寄存器 描述    AX, BX, CX, DX, DI, SI, BP 通用寄存器   IP 指向下一条指令的地址   SP 栈指针寄存器，始终指向栈顶   CS, DS, ES, SS 段寄存器，存放一个内存段的基地址   FLAGS 存放CPU运算产生的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.postimg.cc/LXYQnX9w/output.png">
+<meta property="article:published_time" content="2023-01-05T13:02:46.000Z">
+<meta property="article:modified_time" content="2023-01-05T17:52:40.451Z">
+<meta property="article:author" content="Ando">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.postimg.cc/LXYQnX9w/output.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2023/01/05/OS-1/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OS-1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-01-06 01:52:40'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s1.ax1x.com/2022/08/16/v0iAfg.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.postimg.cc/LXYQnX9w/output.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Ando's blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">OS-1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-05T13:02:46.000Z" title="发表于 2023-01-05 21:02:46">2023-01-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-05T17:52:40.451Z" title="更新于 2023-01-06 01:52:40">2023-01-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/OS/">OS</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="OS-1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="CPU三种工作模式"><a href="#CPU三种工作模式" class="headerlink" title="CPU三种工作模式"></a>CPU三种工作模式</h1><h2 id="实模式"><a href="#实模式" class="headerlink" title="实模式"></a>实模式</h2><h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>运行真实的指令</li>
+<li>发往内存的地址是真实的</li>
+</ul>
+<h3 id="实模式寄存器"><a href="#实模式寄存器" class="headerlink" title="实模式寄存器"></a>实模式寄存器</h3><p>下面是x86 CPU实模式下的寄存器，均为16位</p>
+<table>
+<thead>
+<tr>
+<th>寄存器</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AX, BX, CX, DX, DI, SI, BP</td>
+<td>通用寄存器</td>
+</tr>
+<tr>
+<td>IP</td>
+<td>指向下一条指令的地址</td>
+</tr>
+<tr>
+<td>SP</td>
+<td>栈指针寄存器，始终指向栈顶</td>
+</tr>
+<tr>
+<td>CS, DS, ES, SS</td>
+<td>段寄存器，存放一个内存段的基地址</td>
+</tr>
+<tr>
+<td>FLAGS</td>
+<td>存放CPU运算产生的标志位</td>
+</tr>
+</tbody></table>
+<h3 id="实模式访问内存"><a href="#实模式访问内存" class="headerlink" title="实模式访问内存"></a>实模式访问内存</h3><p><a target="_blank" rel="noopener" href="https://postimg.cc/xc1pRh8h"><img src="https://i.postimg.cc/kXQrndmJ/14633ea933972e19f3439eb6aeab3d13.webp" alt="14633ea933972e19f3439eb6aeab3d13.webp"></a></p>
+<p>代码段由CS和IP确定，栈段由SS和SP确定</p>
+<p>示例汇编代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">data SEGMENT ;定义一个数据段存放Hello World!</span><br><span class="line">    hello  DB &#x27;Hello World!$&#x27; ;注意要以$结束</span><br><span class="line">data ENDS</span><br><span class="line">code SEGMENT ;定义一个代码段存放程序指令</span><br><span class="line">    ASSUME CS:CODE,DS:DATA ;告诉汇编程序，DS指向数据段，CS指向代码段</span><br><span class="line">start:</span><br><span class="line">    MOV AX,data  ;将data段首地址赋值给AX                </span><br><span class="line">    MOV DS,AX    ;将AX赋值给DS，使DS指向data段</span><br><span class="line">    LEA DX,hello ;使DX指向hello首地址</span><br><span class="line">    ;下面MOV和INT搭配实现不同的系统调用(输出，结束程序等)</span><br><span class="line">    MOV AH,09h   ;给AH设置参数09H，AH是AX高8位，AL是AX低8位，其它类似</span><br><span class="line">    INT 21h      ;执行DOS中断输出DS指向的DX指向的字符串hello</span><br><span class="line">    MOV AX,4C00h ;给AX设置参数4C00h</span><br><span class="line">    INT 21h      ;调用4C00h号功能，结束程序</span><br><span class="line">code ENDS</span><br><span class="line">END start</span><br></pre></td></tr></table></figure>
+
+<h3 id="实模式中断"><a href="#实模式中断" class="headerlink" title="实模式中断"></a>实模式中断</h3><ul>
+<li><strong>硬件中断</strong>：中断控制器直接给CPU发射电子信号，CPU作出应答，随后中断控制器发送中断号</li>
+<li><strong>软件中断</strong>：CPU执行了<strong>INT指令</strong></li>
+</ul>
+<p>为了实现中断机制，我们需要构建中断向量表。(IDTR是CPU的特定寄存器)</p>
+<p><a target="_blank" rel="noopener" href="https://postimg.cc/F7MDBdkS"><img src="https://i.postimg.cc/jS5mCysM/cd6ed6b49bf06b8de6bcd47e82e24051.webp" alt="cd6ed6b49bf06b8de6bcd47e82e24051.webp"></a></p>
+<h2 id="保护模式"><a href="#保护模式" class="headerlink" title="保护模式"></a>保护模式</h2><h3 id="保护模式寄存器"><a href="#保护模式寄存器" class="headerlink" title="保护模式寄存器"></a>保护模式寄存器</h3><table>
+<thead>
+<tr>
+<th>寄存器</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>EAX, EBX, ECX, EDX, EDI, ESI, EBP</td>
+<td><strong>32位</strong>通用寄存器（名字在实模式基础上加了E）</td>
+</tr>
+<tr>
+<td>EIP</td>
+<td><strong>32位</strong>程序指针</td>
+</tr>
+<tr>
+<td>ESP</td>
+<td><strong>32位</strong>栈指针</td>
+</tr>
+<tr>
+<td>CS, DS, ES, SS, <strong>FS, GS</strong></td>
+<td><strong>16位</strong>段寄存器，里面存放内存段的描述符索引</td>
+</tr>
+<tr>
+<td>EFLAGS</td>
+<td><strong>32位</strong>CPU标志寄存器</td>
+</tr>
+<tr>
+<td><strong>CR0, CR1, CR2, CR3</strong></td>
+<td><strong>32位CPU控制寄存器，控制CPU功能</strong></td>
+</tr>
+</tbody></table>
+<h3 id="保护模式特权级"><a href="#保护模式特权级" class="headerlink" title="保护模式特权级"></a>保护模式特权级</h3><p>特权级分为4级，从R0-R3，R0 可以执行所有指令，R1、R2、R3 依次递减，它们只能执行上一级指令数量的子集。</p>
+<p><a target="_blank" rel="noopener" href="https://postimg.cc/MctzK8yW"><img src="https://i.postimg.cc/wvYM2qMs/d29yyb3f4ac30552e4c0835525d72b2b.webp" alt="d29yyb3f4ac30552e4c0835525d72b2b.webp"></a></p>
+<h3 id="保护模式段描述符"><a href="#保护模式段描述符" class="headerlink" title="保护模式段描述符"></a>保护模式段描述符</h3><p>目前为止，内存还是分段模型，要对内存进行保护，就可以转换成<strong>对段的保护</strong>。</p>
+<p>为了实现对段的保护，我们需要段描述符记录段的信息，其中包括该段的权限级别，从而确定能否被访问</p>
+<p>又由于CPU拓展后，地址均为32位，段长度最大为（1 &lt;&lt; 20）</p>
+<p>因此我们要记录一个段的信息，至少需要32+20(记录该段长度)&#x3D;52位，再加上些标识位，凑到64位：</p>
+<p><a target="_blank" rel="noopener" href="https://postimg.cc/jC2yTxzS"><img src="https://i.postimg.cc/Wp68Mtzg/b40a64dd5ca1dc1efd8957525e904634.webp" alt="b40a64dd5ca1dc1efd8957525e904634.webp"></a></p>
+<p>多个段描述符形成全局的段描述符表，该表的基地址和长度记录在CPU的GDTR寄存器中</p>
+<p><a target="_blank" rel="noopener" href="https://postimg.cc/w7HHJv06"><img src="https://i.postimg.cc/Hs8Lq8M7/ab203e85dd8468051eca238c3ebd81f7.webp" alt="ab203e85dd8468051eca238c3ebd81f7.webp"></a></p>
+<p>段寄存器中不再存放段基地址，而是具体段描述符的索引，<strong>访问一个内存地址时，段寄存器中的索引首先会结合 GDTR 寄存器找到内存中的段描述符</strong>，再根据其中的段信息判断能不能访问成功。</p>
+<h3 id="保护模式段选择子"><a href="#保护模式段选择子" class="headerlink" title="保护模式段选择子"></a>保护模式段选择子</h3><p>CS-GS这些段寄存器有16位，实际上它们还均附有<strong>影子寄存器</strong>(64位，用于段描述符的高速缓存)，但这些影子寄存器位于硬件，对程序员不可见也不可操作。</p>
+<p><a target="_blank" rel="noopener" href="https://postimg.cc/DmR6YJtT"><img src="https://i.postimg.cc/dtVf3G6L/d08ec3163c80a5dd94e488a71588f8a4.webp" alt="d08ec3163c80a5dd94e488a71588f8a4.webp"></a></p>
+<p>低三位之所以能放 TI 和 RPL，是因为段描述符 8 字节对齐，每个索引低 3 位都为 0</p>
+<p><strong>TI</strong>: 我们不用关注 LDT，只需要使用 GDT 全局描述符表，所以 TI 永远设为 0。</p>
+<p><strong>RPL</strong>: 通常情况下，CS 和 SS 中 RPL 就组成了 CPL（当前权限级别），所以常常是 RPL&#x3D;CPL，进而 CPL 就表示发起访问者要以什么权限去访问目标段，当 CPL 大于目标段 DPL 时，则 CPU 禁止访问，只有 CPL 小于等于目标段 DPL 时才能访问。</p>
+<h3 id="保护模式平坦模型"><a href="#保护模式平坦模型" class="headerlink" title="保护模式平坦模型"></a>保护模式平坦模型</h3><p>分段模型有很多缺陷，这在后面讲内存管理时有详细介绍，其实现代操作系统都会使用分页模型（这点在后面讲 MMU 那节课再探讨）。</p>
+<p>但是 x86 CPU 并不能直接使用分页模型，而是要在分段模型的前提下，根据需要决定是否要开启分页。因为这是硬件的规定，程序员是无法改变的。但是我们可以简化设计，来使分段成为一种“虚设”，这就是保护模式的平坦模型。</p>
+<p>由于CPU为32位，我们最大有1&lt;&lt;32的地址，而段长度最大为20位，粒度最大为2^12，因此一个段最长也为1&lt;&lt;32。</p>
+<p>我们可以设置所有的段均从0开始，长度均为1&lt;&lt;20，粒度均为1&lt;&lt;12，那么所有的段均为1&lt;&lt;32地址空间</p>
+<p>下面是当前该OS的段描述符表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">GDT_START:</span><br><span class="line">knull_dsc: dq 0</span><br><span class="line">;第一个段描述符CPU硬件规定必须为0</span><br><span class="line">kcode_dsc: dq 0x00cf9e000000ffff</span><br><span class="line">;段基地址=0，段长度=0xfffff</span><br><span class="line">;G=1,D/B=1,L=0,AVL=0 </span><br><span class="line">;P=1,DPL=0,S=1</span><br><span class="line">;T=1,C=1,R=1,A=0</span><br><span class="line">kdata_dsc: dq 0x00cf92000000ffff</span><br><span class="line">;段基地址=0，段长度=0xfffff</span><br><span class="line">;G=1,D/B=1,L=0,AVL=0 </span><br><span class="line">;P=1,DPL=0,S=1</span><br><span class="line">;T=0,C=0,R=1,A=0</span><br><span class="line">GDT_END:</span><br><span class="line"></span><br><span class="line">GDT_PTR:</span><br><span class="line">GDTLEN  dw GDT_END-GDT_START-1</span><br><span class="line">GDTBASE  dd GDT_START</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>G&#x3D;1，则段长度等于 0xfffff 个 4KB（G位为1，粒度为4KB，即最大的1&lt;&lt;12）</p>
+<p>DPL&#x3D;0，这说明需要最高权限即 CPL&#x3D;0 才能访问。</p>
+</blockquote>
+<h3 id="保护模式中断"><a href="#保护模式中断" class="headerlink" title="保护模式中断"></a>保护模式中断</h3><p>实模式下中断无需权限检查，而保护模式需要权限检查以及权限切换，因此同样的，我们需要中断描述符描述每个中断向量的信息。</p>
+<p>我们将一个中断的中断描述符称为中断门描述符：</p>
+<p><a target="_blank" rel="noopener" href="https://postimg.cc/hQrdgGSK"><img src="https://i.postimg.cc/z3mSCL6H/e11b9de930a09fb41bd6ded9bf12620b.webp" alt="e11b9de930a09fb41bd6ded9bf12620b.webp"></a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Ando</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2023/01/05/OS-1/">http://example.com/2023/01/05/OS-1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Ando's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/OS/">OS</a></div><div class="post_share"><div class="social-share" data-image="https://i.postimg.cc/LXYQnX9w/output.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/01/04/%E9%BC%93%E7%BB%84%E6%80%9D%E8%B7%AF-1/"><img class="next-cover" src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">鼓组思路-1</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s1.ax1x.com/2022/08/16/v0iAfg.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Ando</div><div class="author-info__description">生活历险 并肩莽莽原野荒</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Ando233"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CPU%E4%B8%89%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">CPU三种工作模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text">实模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-number">1.1.1.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%A8%A1%E5%BC%8F%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">1.1.2.</span> <span class="toc-text">实模式寄存器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%A8%A1%E5%BC%8F%E8%AE%BF%E9%97%AE%E5%86%85%E5%AD%98"><span class="toc-number">1.1.3.</span> <span class="toc-text">实模式访问内存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%A8%A1%E5%BC%8F%E4%B8%AD%E6%96%AD"><span class="toc-number">1.1.4.</span> <span class="toc-text">实模式中断</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">保护模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">1.2.1.</span> <span class="toc-text">保护模式寄存器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E7%89%B9%E6%9D%83%E7%BA%A7"><span class="toc-number">1.2.2.</span> <span class="toc-text">保护模式特权级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E6%AE%B5%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="toc-number">1.2.3.</span> <span class="toc-text">保护模式段描述符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E6%AE%B5%E9%80%89%E6%8B%A9%E5%AD%90"><span class="toc-number">1.2.4.</span> <span class="toc-text">保护模式段选择子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E5%B9%B3%E5%9D%A6%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.2.5.</span> <span class="toc-text">保护模式平坦模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E4%B8%AD%E6%96%AD"><span class="toc-number">1.2.6.</span> <span class="toc-text">保护模式中断</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/01/05/OS-1/" title="OS-1"><img src="https://i.postimg.cc/LXYQnX9w/output.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OS-1"/></a><div class="content"><a class="title" href="/2023/01/05/OS-1/" title="OS-1">OS-1</a><time datetime="2023-01-05T13:02:46.000Z" title="发表于 2023-01-05 21:02:46">2023-01-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/04/%E9%BC%93%E7%BB%84%E6%80%9D%E8%B7%AF-1/" title="鼓组思路-1"><img src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="鼓组思路-1"/></a><div class="content"><a class="title" href="/2023/01/04/%E9%BC%93%E7%BB%84%E6%80%9D%E8%B7%AF-1/" title="鼓组思路-1">鼓组思路-1</a><time datetime="2023-01-04T14:52:00.000Z" title="发表于 2023-01-04 22:52:00">2023-01-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/01/shell%E7%BC%96%E7%A8%8B/" title="shell编程小技巧"><img src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="shell编程小技巧"/></a><div class="content"><a class="title" href="/2023/01/01/shell%E7%BC%96%E7%A8%8B/" title="shell编程小技巧">shell编程小技巧</a><time datetime="2022-12-31T17:17:36.000Z" title="发表于 2023-01-01 01:17:36">2023-01-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/30/gcc%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/" title="gcc优化技术"><img src="https://s1.ax1x.com/2022/08/16/v0K6mD.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="gcc优化技术"/></a><div class="content"><a class="title" href="/2022/12/30/gcc%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/" title="gcc优化技术">gcc优化技术</a><time datetime="2022-12-30T07:22:35.000Z" title="发表于 2022-12-30 15:22:35">2022-12-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/29/GoLang-1/" title="GoLang-1"><img src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GoLang-1"/></a><div class="content"><a class="title" href="/2022/12/29/GoLang-1/" title="GoLang-1">GoLang-1</a><time datetime="2022-12-29T15:12:40.000Z" title="发表于 2022-12-29 23:12:40">2022-12-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Ando</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
