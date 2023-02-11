@@ -1,0 +1,204 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>计网复习-4 | Ando's blog</title><meta name="keywords" content="计算机网络"><meta name="author" content="Ando"><meta name="copyright" content="Ando"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="网络层IP数据报格式与分片IP数据报格式一个IP分组由首部和数据部分组成：首部前一部分长度固定：20B，所有IP分组必须有。 首部重要字段：  版本 ：4位，IP协议的版本，IPv4为 4 ，IPv6为 6 ，目前广泛使用的版本号是 4  首部长度 ：4位，以32位为单位，最大值为 15×4B&#x3D;60B ，最常用首部长度为 20B  区分服务（TOS） ：8位，服务类型，用于区分不同的服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计网复习-4">
+<meta property="og:url" content="http://example.com/2023/01/24/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0-4/index.html">
+<meta property="og:site_name" content="Ando&#39;s blog">
+<meta property="og:description" content="网络层IP数据报格式与分片IP数据报格式一个IP分组由首部和数据部分组成：首部前一部分长度固定：20B，所有IP分组必须有。 首部重要字段：  版本 ：4位，IP协议的版本，IPv4为 4 ，IPv6为 6 ，目前广泛使用的版本号是 4  首部长度 ：4位，以32位为单位，最大值为 15×4B&#x3D;60B ，最常用首部长度为 20B  区分服务（TOS） ：8位，服务类型，用于区分不同的服务">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2022/08/16/v0KffI.jpg">
+<meta property="article:published_time" content="2023-01-24T09:49:30.000Z">
+<meta property="article:modified_time" content="2023-01-24T15:09:39.522Z">
+<meta property="article:author" content="Ando">
+<meta property="article:tag" content="计算机网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2022/08/16/v0KffI.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2023/01/24/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0-4/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '计网复习-4',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-01-24 23:09:39'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s1.ax1x.com/2022/08/16/v0iAfg.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s1.ax1x.com/2022/08/16/v0KffI.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Ando's blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">计网复习-4</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-24T09:49:30.000Z" title="发表于 2023-01-24 17:49:30">2023-01-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-24T15:09:39.522Z" title="更新于 2023-01-24 23:09:39">2023-01-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="计网复习-4"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h1><h2 id="IP数据报格式与分片"><a href="#IP数据报格式与分片" class="headerlink" title="IP数据报格式与分片"></a>IP数据报格式与分片</h2><h3 id="IP数据报格式"><a href="#IP数据报格式" class="headerlink" title="IP数据报格式"></a>IP数据报格式</h3><p>一个IP分组由首部和数据部分组成：首部前一部分长度固定：20B，所有IP分组必须有。</p>
+<p>首部重要字段：</p>
+<ul>
+<li><p><strong><code>版本</code></strong> ：<strong>4位</strong>，IP协议的版本，IPv4为 4 ，IPv6为 6 ，目前广泛使用的版本号是 4</p>
+</li>
+<li><p><strong><code>首部长度</code></strong> ：<strong>4位</strong>，以32位为单位，最大值为 15×4B&#x3D;60B ，最常用首部长度为 20B</p>
+</li>
+<li><p><strong><code>区分服务（TOS）</code></strong> ：<strong>8位</strong>，服务类型，用于区分不同的服务，包括 3 位的优先权字段（取值可以从 000−111 所有值）， 4 位的TOS子字段和 1 位的未用位但必须置 0</p>
+</li>
+<li><p><strong><code>总长度</code></strong> ：<strong>16位</strong>，IP分组的总长度，即首部和数据之和的长度，单位为<strong>字节</strong>，因此数据报最大长度为 216−1&#x3D;65535B</p>
+</li>
+<li><p><strong><code>标识</code></strong> ：<strong>16位</strong>，计数器，产生<strong>数据报</strong>就加一。用于<strong>数据报分片</strong>时标识分组，以便分组重组。</p>
+</li>
+<li><blockquote>
+<p>注： <strong><code>标识</code></strong> 不是 <strong><code>序号</code></strong> ，因为IP是 <strong><code>无连接</code></strong> 的，不保证数据报的顺序。</p>
+</blockquote>
+</li>
+<li><p><strong><code>标志</code></strong> ：<strong>3位</strong>，目前只有两位有效，最低位 <strong><code>MF</code>（More Fragment）</strong> 和第二位 <strong><code>DF</code>（Don’t Fragment）</strong> ，用于<strong>数据报分片</strong>。</p>
+</li>
+<li><p><strong><code>片偏移</code></strong> ：<strong>13位</strong>，分片后某片的偏移量，片偏移以 8B 为偏移单位。除最后一个分片外，每个分片的长度都是 8B的整数倍</p>
+</li>
+<li><p><strong><code>生存时间（TTL）</code></strong> ：<strong>8位</strong>，数据报在网络中可通过<strong>路由器的最大值</strong>，标识分组在网络中的寿命，确保分组不会在网络中永远循环；经过一个路由器之前，<strong>TTL减一</strong>，当TTL为0时，分组被<strong>丢弃</strong>。</p>
+</li>
+<li><p><strong><code>协议</code></strong> ：<strong>8位</strong>，协议字段，即分组的数据部分上交给哪个协议进行处理，如 6 代表 <strong><code>TCP</code></strong> ， 17 代表 <strong><code>UDP</code></strong> ， 1 代表 <strong><code>ICMP</code></strong> 。</p>
+</li>
+<li><p><strong><code>首部校验和</code></strong> ：<strong>16位</strong>，用于检验<strong>首部</strong>是否出错</p>
+</li>
+<li><p><strong><code>源IP地址</code></strong> ：<strong>32位</strong>，用于标识发送方主机</p>
+</li>
+<li><p><strong><code>目的IP地址</code></strong> ：<strong>32位</strong>，用于标识接收方主机</p>
+</li>
+</ul>
+<h3 id="IP数据报分片"><a href="#IP数据报分片" class="headerlink" title="IP数据报分片"></a>IP数据报分片</h3><ul>
+<li>一个链路层数据报能承载的最大数据量称为 <strong>最大传送单元<code>MTU</code></strong></li>
+<li>链路层的MTU严格地限制着<strong>IP数据报的长度</strong>，各段链路可能使用不同的链路层协议，故其MTU也不同，例如以太网MTU为 1500B ，许多广域网的MTU不超过 576B</li>
+<li>当IP数据报总长度大于MTU时，就需要对数据报进行<strong>分片</strong>，以便于传输；较小的数据报就称为 <strong><code>片</code></strong></li>
+<li>每个数据片都要添加相应的首部；其标识号为<strong>原始的标识号</strong>，片偏移量为该片相对于原始数据报的<strong>偏移量</strong>。</li>
+<li>在标志位中，<strong>DF&#x3D;0</strong>，表示可以分片；DF&#x3D;1，表示不允许分片；<strong>MF&#x3D;0</strong>，表示最后一个分片；<strong>MF&#x3D;1</strong>，表示不是最后一个分片</li>
+</ul>
+<h2 id="IP地址的表示和分类分配，子网掩码，地址有效性，广播地址"><a href="#IP地址的表示和分类分配，子网掩码，地址有效性，广播地址" class="headerlink" title="IP地址的表示和分类分配，子网掩码，地址有效性，广播地址"></a>IP地址的表示和分类分配，子网掩码，地址有效性，广播地址</h2><ul>
+<li><strong><code>IP地址::=&#123;&lt;网络号&gt;,&lt;主机号&gt;&#125;</code></strong> ，网络号标志主机&#x2F;路由器连接到的网络。主机号标志主机&#x2F;路由器。</li>
+<li>网络号在整个Internet范围内<strong>唯一</strong>，主机号在网络号指明的网络内<strong>唯一</strong>。</li>
+</ul>
+<h3 id="IP地址的分类"><a href="#IP地址的分类" class="headerlink" title="IP地址的分类"></a>IP地址的分类</h3><p><img src="https://s2.loli.net/2023/01/24/T9rOLSYUV8QiIXb.webp" alt="7.jpg"></p>
+<p><img src="https://s2.loli.net/2023/01/24/zV1UN9FflPEeJA5.webp" alt="22.jpg"></p>
+<p><img src="https://s2.loli.net/2023/01/24/ucnpwgHmUkY2M7j.webp" alt="12.jpg"></p>
+<p>子网掩码将局域网进一步进行划分，分为子网号和主机号。</p>
+<p>求网络地址：主机号全部填0</p>
+<p>求直接广播地址：主机号全部填1</p>
+<p>最后一个可用ip地址：主机号全部填1再-1</p>
+<h2 id="子网划分"><a href="#子网划分" class="headerlink" title="子网划分"></a>子网划分</h2><ul>
+<li>先判断地址类别，从而了解子网占几位</li>
+<li>得到网络位，子网位，主机位后写出对应的ip地址范围</li>
+</ul>
+<p>或者</p>
+<ul>
+<li>根据子网数量要求，确定子网位数</li>
+<li>再根据子网位数，确定主机位数，从而写出ip地址范围</li>
+</ul>
+<h2 id="CIDR路由聚合"><a href="#CIDR路由聚合" class="headerlink" title="CIDR路由聚合"></a>CIDR路由聚合</h2></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Ando</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2023/01/24/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0-4/">http://example.com/2023/01/24/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0-4/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Ando's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></div><div class="post_share"><div class="social-share" data-image="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/02/06/sklearn%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/"><img class="prev-cover" src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">sklearn逻辑回归</div></div></a></div><div class="next-post pull-right"><a href="/2023/01/24/%E6%97%A5%E9%BA%BB-2/"><img class="next-cover" src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">日麻-2</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/01/23/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0-3/" title="计网复习-1"><img class="cover" src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-23</div><div class="title">计网复习-1</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s1.ax1x.com/2022/08/16/v0iAfg.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Ando</div><div class="author-info__description">生活历险 并肩莽莽原野荒</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Ando233"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="toc-number">1.</span> <span class="toc-text">网络层</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E6%A0%BC%E5%BC%8F%E4%B8%8E%E5%88%86%E7%89%87"><span class="toc-number">1.1.</span> <span class="toc-text">IP数据报格式与分片</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.1.1.</span> <span class="toc-text">IP数据报格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IP%E6%95%B0%E6%8D%AE%E6%8A%A5%E5%88%86%E7%89%87"><span class="toc-number">1.1.2.</span> <span class="toc-text">IP数据报分片</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP%E5%9C%B0%E5%9D%80%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%88%86%E7%B1%BB%E5%88%86%E9%85%8D%EF%BC%8C%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81%EF%BC%8C%E5%9C%B0%E5%9D%80%E6%9C%89%E6%95%88%E6%80%A7%EF%BC%8C%E5%B9%BF%E6%92%AD%E5%9C%B0%E5%9D%80"><span class="toc-number">1.2.</span> <span class="toc-text">IP地址的表示和分类分配，子网掩码，地址有效性，广播地址</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IP%E5%9C%B0%E5%9D%80%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.2.1.</span> <span class="toc-text">IP地址的分类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%90%E7%BD%91%E5%88%92%E5%88%86"><span class="toc-number">1.3.</span> <span class="toc-text">子网划分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CIDR%E8%B7%AF%E7%94%B1%E8%81%9A%E5%90%88"><span class="toc-number">1.4.</span> <span class="toc-text">CIDR路由聚合</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/02/11/%E8%AF%AD%E6%96%99/" title="语料"><img src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="语料"/></a><div class="content"><a class="title" href="/2023/02/11/%E8%AF%AD%E6%96%99/" title="语料">语料</a><time datetime="2023-02-11T14:27:04.000Z" title="发表于 2023-02-11 22:27:04">2023-02-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/11/songwriting-1/" title="songwriting-1"><img src="https://s1.ax1x.com/2022/08/16/v0K6mD.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="songwriting-1"/></a><div class="content"><a class="title" href="/2023/02/11/songwriting-1/" title="songwriting-1">songwriting-1</a><time datetime="2023-02-10T18:24:24.000Z" title="发表于 2023-02-11 02:24:24">2023-02-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/06/sklearn%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/" title="sklearn逻辑回归"><img src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="sklearn逻辑回归"/></a><div class="content"><a class="title" href="/2023/02/06/sklearn%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/" title="sklearn逻辑回归">sklearn逻辑回归</a><time datetime="2023-02-05T17:09:37.000Z" title="发表于 2023-02-06 01:09:37">2023-02-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/24/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0-4/" title="计网复习-4"><img src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计网复习-4"/></a><div class="content"><a class="title" href="/2023/01/24/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0-4/" title="计网复习-4">计网复习-4</a><time datetime="2023-01-24T09:49:30.000Z" title="发表于 2023-01-24 17:49:30">2023-01-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/24/%E6%97%A5%E9%BA%BB-2/" title="日麻-2"><img src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="日麻-2"/></a><div class="content"><a class="title" href="/2023/01/24/%E6%97%A5%E9%BA%BB-2/" title="日麻-2">日麻-2</a><time datetime="2023-01-24T08:42:13.000Z" title="发表于 2023-01-24 16:42:13">2023-01-24</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Ando</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
