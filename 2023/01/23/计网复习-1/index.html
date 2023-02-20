@@ -1,0 +1,193 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>计网复习-1 | Ando's blog</title><meta name="keywords" content="计算机网络"><meta name="author" content="Ando"><meta name="copyright" content="Ando"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="写在前面的话：该部分内容用于BUAA 软院计网期末复习，部分复杂需要理解的知识点只会提及考点、考法而不会详细说明知识点原理，内容不全请见谅。后续有时间会面向考研进行知识点的补充。  计算机网络体系结构1.1 计算机网络的分类 按分布范围：**广域网(WAN)，城域网(MAN)，局域网(LAN)**，个人区域网(PAN)a 按传输技术：广播式网络，点对点网络 按拓扑结构：总线形，星形，环形，网形">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计网复习-1">
+<meta property="og:url" content="http://example.com/2023/01/23/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0-1/index.html">
+<meta property="og:site_name" content="Ando&#39;s blog">
+<meta property="og:description" content="写在前面的话：该部分内容用于BUAA 软院计网期末复习，部分复杂需要理解的知识点只会提及考点、考法而不会详细说明知识点原理，内容不全请见谅。后续有时间会面向考研进行知识点的补充。  计算机网络体系结构1.1 计算机网络的分类 按分布范围：**广域网(WAN)，城域网(MAN)，局域网(LAN)**，个人区域网(PAN)a 按传输技术：广播式网络，点对点网络 按拓扑结构：总线形，星形，环形，网形">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2022/08/16/v0KffI.jpg">
+<meta property="article:published_time" content="2023-01-23T10:51:07.000Z">
+<meta property="article:modified_time" content="2023-02-20T11:33:24.493Z">
+<meta property="article:author" content="Ando">
+<meta property="article:tag" content="计算机网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2022/08/16/v0KffI.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2023/01/23/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0-1/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '计网复习-1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-02-20 19:33:24'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s1.ax1x.com/2022/08/16/v0iAfg.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">36</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s1.ax1x.com/2022/08/16/v0KffI.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Ando's blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">计网复习-1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-23T10:51:07.000Z" title="发表于 2023-01-23 18:51:07">2023-01-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-02-20T11:33:24.493Z" title="更新于 2023-02-20 19:33:24">2023-02-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="计网复习-1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>写在前面的话：该部分内容用于BUAA 软院计网期末复习，部分复杂需要理解的知识点只会提及考点、考法而不会详细说明知识点原理，内容不全请见谅。后续有时间会面向考研进行知识点的补充。</p>
+</blockquote>
+<h1 id="计算机网络体系结构"><a href="#计算机网络体系结构" class="headerlink" title="计算机网络体系结构"></a>计算机网络体系结构</h1><h2 id="1-1-计算机网络的分类"><a href="#1-1-计算机网络的分类" class="headerlink" title="1.1 计算机网络的分类"></a>1.1 计算机网络的分类</h2><ul>
+<li>按分布范围：**广域网(WAN)<strong>，城域网(MAN)，</strong>局域网(LAN)**，个人区域网(PAN)a</li>
+<li>按传输技术：广播式网络，点对点网络</li>
+<li>按拓扑结构：总线形，星形，环形，网形</li>
+</ul>
+<h2 id="1-2-计算机网络体系结构与参考模型"><a href="#1-2-计算机网络体系结构与参考模型" class="headerlink" title="1.2 计算机网络体系结构与参考模型"></a>1.2 计算机网络体系结构与参考模型</h2><h3 id="1-2-1-计算机网络分层结构"><a href="#1-2-1-计算机网络分层结构" class="headerlink" title="1.2.1 计算机网络分层结构"></a>1.2.1 计算机网络分层结构</h3><ul>
+<li>网络的<strong>体系结构</strong>：网络的各层及其协议的集合</li>
+<li><strong>实体</strong>：将计算机网络分层后，第n层中的活动元素通常称为第n层实体(具体可指硬件或软件进程)</li>
+<li><strong>对等层</strong>：不同机器上的同一层</li>
+<li><strong>对等实体</strong>：同一层的实体</li>
+<li><strong>服务提供者</strong>：第n层为第n+1层提供服务，将第n层称为服务提供者</li>
+<li><strong>SDU，PCI，PDU</strong>：分别是报文的数据部分，控制信息部分，数据部分+控制信息部分。我们依次称其为<strong>服务数据单元，协议控制单元，协议数据单元。</strong>在各层间传输数据时，我们通常将第n+1层的PDU当作第n层的SDU。</li>
+</ul>
+<h3 id="1-2-2-计算机网络协议、接口、服务的概念"><a href="#1-2-2-计算机网络协议、接口、服务的概念" class="headerlink" title="1.2.2 计算机网络协议、接口、服务的概念"></a>1.2.2 计算机网络协议、接口、服务的概念</h3><ul>
+<li><strong>协议</strong>：控制两个<strong>对等实体</strong>进行通信的规则的集合，由<strong>语法、语义和同步</strong>三部分组成。</li>
+<li><strong>接口</strong>：同一结点内<strong>相邻两层</strong>间交换信息的<strong>连接点</strong></li>
+<li><strong>服务</strong>：下层为<strong>紧邻的上层</strong>提供的<strong>功能调用</strong></li>
+<li>计算机网络提供的<strong>服务分类</strong>：面向连接服务&#x2F;无连接服务，可靠服务&#x2F;不可靠服务，有应答服务&#x2F;无应答服务。面向连接服务有<strong>连接建立，数据传输，连接释放</strong>的阶段。无连接服务即<strong>尽最大努力交付</strong>。可靠服务指网络具有<strong>纠错，检错，应答</strong>机制，能保证数据正确可靠地传送到目的地。</li>
+</ul>
+<h3 id="1-2-3-ISO-x2F-OSI参考模型和TCP-x2F-IP模型"><a href="#1-2-3-ISO-x2F-OSI参考模型和TCP-x2F-IP模型" class="headerlink" title="1.2.3 ISO&#x2F;OSI参考模型和TCP&#x2F;IP模型"></a>1.2.3 ISO&#x2F;OSI参考模型和TCP&#x2F;IP模型</h3><h4 id="1-2-3-1-OSI模型"><a href="#1-2-3-1-OSI模型" class="headerlink" title="1.2.3.1 OSI模型"></a>1.2.3.1 OSI模型</h4><ul>
+<li><strong>OSI模型</strong>：由ISO提出的<strong>开放系统互连参考模型</strong>。有7层：<strong>物理层，数据链路层，网络层，传输层，会话层，表示层，应用层</strong>。低3层叫做<strong>通信子网</strong>，高3层叫做<strong>资源子网</strong>。</li>
+<li><strong>物理层</strong>：传输单位是<strong>比特</strong>。物理媒体(双绞线，光缆等)并不在物理层协议里面，可以把它们看作第0层。</li>
+<li><strong>数据链路层</strong>：传输单位是<strong>帧</strong>，功能为<strong>组帧，差错控制，流量控制，传输管理</strong>等。典型协议有SDLC，HDLC，PPP，STP和帧中继等。</li>
+<li><strong>网络层</strong>：传输单位是<strong>数据报</strong>，对分组进行<strong>路由选择，实现流量控制，拥塞控制，差错控制，网际互连</strong>。典型协议有IP，IPX，ICMP，IGMP，ARP，RARP，OSPF。</li>
+<li><strong>传输层</strong>：传输单位是<strong>报文段</strong>(TCP)或<strong>用户数据报</strong>(UDP)。为<strong>端到端</strong>连接提供<strong>可靠</strong>的服务，<strong>流量控制，差错控制，服务质量，数据传输管理</strong>等服务</li>
+<li><strong>会话层</strong>：管理主机间<strong>会话进程</strong>，实现<strong>数据同步</strong></li>
+<li><strong>表示层</strong>：定义数据结构，采用标准的<strong>编码</strong>形式</li>
+<li><strong>应用层</strong>：典型协议文件传送FTP，电子邮件SMTP，万维网HTTP</li>
+</ul>
+<h4 id="1-2-3-2-TCP-x2F-IP模型"><a href="#1-2-3-2-TCP-x2F-IP模型" class="headerlink" title="1.2.3.2 TCP&#x2F;IP模型"></a>1.2.3.2 TCP&#x2F;IP模型</h4><ul>
+<li>由低到高：网络接口层，网际层，传输层和应用层。</li>
+</ul>
+<h4 id="1-2-3-3-两者对比"><a href="#1-2-3-3-两者对比" class="headerlink" title="1.2.3.3 两者对比"></a>1.2.3.3 两者对比</h4><p><strong>相似点</strong>：</p>
+<ul>
+<li>均采用<strong>分层</strong>结构</li>
+<li>独立的<strong>协议</strong>栈</li>
+<li>解决<strong>互联</strong>问题</li>
+</ul>
+<p><strong>差别</strong>：</p>
+<ul>
+<li>OSI精确的定义了<strong>服务、协议和接口</strong>概念；TCP没有明确区分。</li>
+<li>OSI没有偏向于任何特定的协议，通用性良好；TCP&#x2F;IP则是对已有的协议的描述</li>
+<li>TCP&#x2F;IP考虑到了异构网络互联问题，将网际协议(IP)作为一个单独重要层次；OSI在后来只能在网络层中划分子层完成类似的功能</li>
+<li><strong>OSI网络层支持无连接和面向连接通信，在传输层仅有面向连接通信；TCP&#x2F;IP在网际层仅有无连接通信，而在传输层支持无连接和面向连接通信</strong></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Ando</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2023/01/23/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0-1/">http://example.com/2023/01/23/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0-1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Ando's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></div><div class="post_share"><div class="social-share" data-image="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/01/23/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0-3/"><img class="prev-cover" src="https://s1.ax1x.com/2022/08/16/v0K6mD.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">计网复习-3</div></div></a></div><div class="next-post pull-right"><a href="/2023/01/23/Mysql-1/"><img class="next-cover" src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Mysql-1</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/01/23/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0-3/" title="计网复习-3"><img class="cover" src="https://s1.ax1x.com/2022/08/16/v0K6mD.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-23</div><div class="title">计网复习-3</div></div></a></div><div><a href="/2023/01/24/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0-4/" title="计网复习-4"><img class="cover" src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-24</div><div class="title">计网复习-4</div></div></a></div><div><a href="/2023/02/20/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0-2/" title="计网复习-2"><img class="cover" src="https://s1.ax1x.com/2022/08/16/v0K6mD.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-20</div><div class="title">计网复习-2</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s1.ax1x.com/2022/08/16/v0iAfg.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Ando</div><div class="author-info__description">生活历险 并肩莽莽原野荒</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">36</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Ando233"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">计算机网络体系结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 计算机网络的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 计算机网络体系结构与参考模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 计算机网络分层结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E3%80%81%E6%8E%A5%E5%8F%A3%E3%80%81%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 计算机网络协议、接口、服务的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-3-ISO-x2F-OSI%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%92%8CTCP-x2F-IP%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.2.3 ISO&#x2F;OSI参考模型和TCP&#x2F;IP模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-1-OSI%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">1.2.3.1 OSI模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-2-TCP-x2F-IP%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">1.2.3.2 TCP&#x2F;IP模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-3-%E4%B8%A4%E8%80%85%E5%AF%B9%E6%AF%94"><span class="toc-number">1.2.3.3.</span> <span class="toc-text">1.2.3.3 两者对比</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/02/20/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0-2/" title="计网复习-2"><img src="https://s1.ax1x.com/2022/08/16/v0K6mD.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计网复习-2"/></a><div class="content"><a class="title" href="/2023/02/20/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0-2/" title="计网复习-2">计网复习-2</a><time datetime="2023-02-20T11:32:10.000Z" title="发表于 2023-02-20 19:32:10">2023-02-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/12/YOLO/" title="YOLO"><img src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="YOLO"/></a><div class="content"><a class="title" href="/2023/02/12/YOLO/" title="YOLO">YOLO</a><time datetime="2023-02-11T17:17:18.000Z" title="发表于 2023-02-12 01:17:18">2023-02-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/11/%E8%AF%AD%E6%96%99/" title="语料"><img src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="语料"/></a><div class="content"><a class="title" href="/2023/02/11/%E8%AF%AD%E6%96%99/" title="语料">语料</a><time datetime="2023-02-11T14:27:04.000Z" title="发表于 2023-02-11 22:27:04">2023-02-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/11/songwriting-1/" title="songwriting-1"><img src="https://s1.ax1x.com/2022/08/16/v0K6mD.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="songwriting-1"/></a><div class="content"><a class="title" href="/2023/02/11/songwriting-1/" title="songwriting-1">songwriting-1</a><time datetime="2023-02-10T18:24:24.000Z" title="发表于 2023-02-11 02:24:24">2023-02-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/06/sklearn%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/" title="sklearn逻辑回归"><img src="https://s1.ax1x.com/2022/08/16/v0KffI.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="sklearn逻辑回归"/></a><div class="content"><a class="title" href="/2023/02/06/sklearn%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/" title="sklearn逻辑回归">sklearn逻辑回归</a><time datetime="2023-02-05T17:09:37.000Z" title="发表于 2023-02-06 01:09:37">2023-02-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Ando</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
