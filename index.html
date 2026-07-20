@@ -1,173 +1,326 @@
 <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f0e8" />
+    <meta
+      name="description"
+      content="Yuqi Wang is a researcher working on generative models, image and video editing, and multimodal intelligence."
+    />
+    <meta name="author" content="Yuqi Wang" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Yuqi Wang — Generative AI Researcher" />
+    <meta
+      property="og:description"
+      content="Research in generative models, controllable image and video editing, and multimodal intelligence."
+    />
+    <meta property="og:url" content="https://ando233.github.io/" />
+    <meta property="og:image" content="https://ando233.github.io/assets/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://ando233.github.io/" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="icon" href="./favicon.ico" sizes="any" />
+    <title>Yuqi Wang — Generative AI Researcher</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Yuqi Wang",
+        "url": "https://ando233.github.io/",
+        "sameAs": ["https://github.com/Ando233"],
+        "affiliation": {
+          "@type": "CollegeOrUniversity",
+          "name": "Beihang University"
+        },
+        "knowsAbout": [
+          "Generative AI",
+          "Image Editing",
+          "Video Editing",
+          "Multimodal Large Language Models",
+          "Diffusion Models"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
+    <header class="site-header" data-header>
+      <a class="wordmark" href="#top" aria-label="Yuqi Wang, home">
+        <span class="wordmark-mark">YW</span>
+        <span>Yuqi Wang</span>
+      </a>
 
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="#research">Research</a>
+        <a href="#experience">Experience</a>
+        <a href="#about">About</a>
+      </nav>
 
+      <div class="header-actions">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme">
+          <span class="theme-icon" aria-hidden="true">◐</span>
+        </button>
+        <a class="header-contact" href="mailto:flairando@gmail.com">Let’s talk <span aria-hidden="true">↗</span></a>
+        <button class="menu-toggle" type="button" data-menu-toggle aria-label="Open navigation" aria-expanded="false">
+          <span></span><span></span>
+        </button>
+      </div>
 
+      <nav class="mobile-nav" data-mobile-nav aria-label="Mobile navigation">
+        <a href="#research">Research</a>
+        <a href="#experience">Experience</a>
+        <a href="#about">About</a>
+        <a href="mailto:flairando@gmail.com">Email me ↗</a>
+      </nav>
+    </header>
 
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="hero-orb orb-one" aria-hidden="true"></div>
+        <div class="hero-orb orb-two" aria-hidden="true"></div>
 
+        <div class="hero-copy reveal">
+          <p class="eyebrow"><span></span> Generative AI researcher · Beijing</p>
+          <h1>
+            I build intelligent systems that <em>understand</em> what to change—
+            <span>and what to preserve.</span>
+          </h1>
+          <p class="hero-intro">
+            I’m <strong>Yuqi Wang</strong> (王雨琦), a researcher at Beihang University exploring
+            controllable image and video editing, multimodal models, and generative learning.
+          </p>
+          <div class="hero-links">
+            <a class="button button-primary" href="#research">Explore my research <span aria-hidden="true">↓</span></a>
+            <a class="text-link" href="https://github.com/Ando233" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
 
-<html
-  class="not-ready lg:text-base"
-  style="--bg:#faf8f1"
-  lang="en-us"
-  dir="ltr"
-><head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, shrink-to-fit=no"
-  />
+        <div class="research-map reveal" aria-label="Research focus map">
+          <div class="map-topline">
+            <span>Research atlas</span>
+            <span>2024—NOW</span>
+          </div>
+          <div class="map-canvas">
+            <div class="orbit orbit-a"></div>
+            <div class="orbit orbit-b"></div>
+            <div class="map-node map-node-main">
+              <span class="node-index">01</span>
+              <strong>Generative<br />Intelligence</strong>
+            </div>
+            <div class="map-node node-image"><span>02</span> Image<br />Editing</div>
+            <div class="map-node node-video"><span>03</span> Video<br />Editing</div>
+            <div class="map-node node-mllm"><span>04</span> MLLM × DiT</div>
+            <div class="map-signal signal-a"></div>
+            <div class="map-signal signal-b"></div>
+            <div class="map-signal signal-c"></div>
+          </div>
+          <p class="map-caption">
+            Connecting visual understanding, precise control, and perceptual quality.
+          </p>
+        </div>
 
-  
-  <title>My New Hugo Site</title>
+        <div class="hero-foot reveal">
+          <p>Currently: AIGC Algorithm Intern at Kuaishou</p>
+          <p>Open to research collaboration</p>
+        </div>
+      </section>
 
-  
-  <meta name="theme-color" />
+      <section class="section publications" id="research">
+        <div class="section-heading reveal">
+          <div>
+            <p class="section-number">01 / Selected publications</p>
+            <h2>Research that turns<br />intent into pixels.</h2>
+          </div>
+          <p class="section-note">
+            My work centers on one question: how can generative models follow complex human intent
+            while preserving everything that should remain untouched?
+          </p>
+        </div>
 
-  
-  <meta
-    name="description"
-    content="A personal blog"
-  />
-  <meta name="author" content="My New Hugo Site" /><link rel="preload stylesheet" as="style" href="https://example.org/main.min.css" />
+        <article class="paper paper-featured reveal">
+          <div class="paper-visual visual-architecture">
+            <div class="architecture-label">MULTI-SHOT / 01</div>
+            <img
+              src="./assets/unicorn-architecture.png"
+              alt="Unicorn architecture: shot-aware keyframe planning, in-context image editing, and keyframe-anchored video editing"
+              loading="lazy"
+            />
+            <p>Shot-wise keyframe anchors</p>
+          </div>
+          <div class="paper-content">
+            <div class="paper-meta">
+              <span class="venue venue-review">AAAI 2027 · Under review</span>
+              <span>First author</span>
+            </div>
+            <h3>Unicorn: Controllable Multi-Shot Video Editing Framework via Shot-wise Keyframe Anchors</h3>
+            <p>
+              The first controllable framework for multi-shot video editing, combining shot-aware
+              planning, in-context keyframe editing, and edited-frame anchors. Unicorn improves the
+              strongest baseline by 8.94% on MultiShotBench while preserving cross-shot identity.
+            </p>
+            <ul class="paper-tags" aria-label="Topics">
+              <li>Video editing</li><li>Shot localization</li><li>Cross-shot consistency</li>
+            </ul>
+            <span class="paper-status">Manuscript available after review</span>
+          </div>
+        </article>
 
-  
-  <link rel="preload" as="image" href="https://example.org/theme.png" />
+        <article class="paper reveal">
+          <div class="paper-visual visual-reward" aria-hidden="true">
+            <div class="reward-label">SELF-REWARD / 02</div>
+            <div class="reward-scene scene-before"><span>UNDERSTAND</span></div>
+            <div class="reward-core">SIA<br /><i>+</i><br />SRR</div>
+            <div class="reward-scene scene-after"><span>EVALUATE</span></div>
+            <div class="reward-path"></div>
+            <p>One model. One cognitive loop.</p>
+          </div>
+          <div class="paper-content">
+            <div class="paper-meta">
+              <span class="venue">ACM MM 2026 · Accepted</span>
+              <span>First author</span>
+            </div>
+            <h3>SREdit: A Self-Rewarding Framework with Intrinsically Aligned Critic for Image Editing</h3>
+            <p>
+              A unified self-rewarding framework that aligns instruction understanding with reward
+              evaluation, reducing semantic drift in reinforcement-learning-based image editing.
+            </p>
+            <ul class="paper-tags" aria-label="Topics">
+              <li>Image editing</li><li>Self-rewarding</li><li>MLLM–DiT</li>
+            </ul>
+            <span class="paper-status">Final paper coming soon</span>
+          </div>
+        </article>
 
-  
+        <article class="paper reveal">
+          <div class="paper-visual visual-fed" aria-hidden="true">
+            <div class="fed-label">FEDERATED / 03</div>
+            <div class="client client-a"><i></i><i></i><i></i></div>
+            <div class="client client-b"><i></i><i></i><i></i><i></i></div>
+            <div class="client client-c"><i></i><i></i></div>
+            <div class="global-model">GLOBAL<br />MODEL</div>
+            <div class="fed-line line-a"></div><div class="fed-line line-b"></div><div class="fed-line line-c"></div>
+            <div class="fed-score">Δ prediction</div>
+            <p>Generate what each client lacks.</p>
+          </div>
+          <div class="paper-content">
+            <div class="paper-meta">
+              <span class="venue">ICML 2026 · Poster</span>
+              <span>First author · Equal contribution</span>
+            </div>
+            <h3>FedPDG: Prediction Discrepancy–Guided Data Generation for Heterogeneous Federated Learning</h3>
+            <p>
+              Uses model prediction discrepancy to discover missing local data and guide diffusion-based
+              generation, improving heterogeneous federated learning by up to 3.82%.
+            </p>
+            <ul class="paper-tags" aria-label="Topics">
+              <li>Federated learning</li><li>Diffusion</li><li>DPO</li>
+            </ul>
+            <a class="paper-link" href="./papers/fedpdg.pdf" target="_blank">Read paper <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+      </section>
 
-  
+      <section class="section experience" id="experience">
+        <div class="section-heading reveal">
+          <div>
+            <p class="section-number">02 / Experience</p>
+            <h2>Research, built for<br />the real world.</h2>
+          </div>
+          <p class="section-note">
+            From long-form video understanding to controllable generation, I enjoy carrying ideas
+            all the way from a research question to a working system.
+          </p>
+        </div>
 
-  
+        <div class="timeline">
+          <article class="role reveal">
+            <div class="role-date">2026.05 — Present</div>
+            <div class="role-main">
+              <div class="role-title"><h3>Kuaishou</h3><span>快手</span></div>
+              <p class="role-subtitle">AIGC Algorithm Intern · Commercial Technology, Safety & Ecosystem</p>
+              <p>
+                Leading research on multi-shot video editing and building MultiShotBench, an evaluation
+                suite spanning instruction following, shot-level fidelity, visual quality, and motion.
+              </p>
+              <div class="role-skills"><span>Video editing</span><span>Qwen-Image-Edit</span><span>Evaluation</span></div>
+            </div>
+            <div class="role-index">01</div>
+          </article>
 
-  
-  <link
-    rel="icon"
-    href="https://example.org/favicon.ico"
-  />
-  <link
-    rel="apple-touch-icon"
-    href="https://example.org/apple-touch-icon.png"
-  />
+          <article class="role reveal">
+            <div class="role-date">2024.10 — 2026.05</div>
+            <div class="role-main">
+              <div class="role-title"><h3>Meituan</h3><span>美团</span></div>
+              <p class="role-subtitle">AIGC Algorithm Intern · Digital Human & Creative Generation</p>
+              <p>
+                Developed multi-element image composition and an end-to-end long-video auto-editing
+                pipeline. The production system processed 1,000+ videos daily, improved editing efficiency
+                by 8×, and lifted completion rate by about 12%.
+              </p>
+              <div class="role-skills"><span>Long-video understanding</span><span>VLM</span><span>Production AI</span></div>
+            </div>
+            <div class="role-index">02</div>
+          </article>
+        </div>
+      </section>
 
-  <meta name="generator" content="Hugo 0.150.1">
-  <meta itemprop="name" content="My New Hugo Site">
-  <meta itemprop="datePublished" content="2025-11-03T16:49:10+08:00">
-  <meta itemprop="dateModified" content="2025-11-03T16:49:10+08:00"><meta property="og:url" content="https://example.org/">
-  <meta property="og:site_name" content="My New Hugo Site">
-  <meta property="og:title" content="My New Hugo Site">
-  <meta property="og:locale" content="en_us">
-  <meta property="og:type" content="website">
+      <section class="section about" id="about">
+        <div class="about-grid">
+          <div class="about-statement reveal">
+            <p class="section-number">03 / About</p>
+            <h2>Curious about the space between <em>understanding</em> and <em>generation.</em></h2>
+          </div>
+          <div class="about-copy reveal">
+            <p>
+              I’m a master’s student in Software Engineering at <strong>Beihang University</strong>,
+              advised by Prof. Jianwei Niu in the LDMC Lab. My research spans diffusion and flow-matching
+              models, multimodal language models, and reinforcement learning for visual generation.
+            </p>
+            <p>
+              Before graduate school, I completed my bachelor’s degree at Beihang, where I was named an
+              Outstanding Graduate and received national first prizes in mathematical modeling and compiler design.
+            </p>
+          </div>
+        </div>
 
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="My New Hugo Site">
-<link
-    rel="alternate"
-    type="application/rss&#43;xml"
-    href="https://example.org/index.xml"
-    title="My New Hugo Site"
-  />
-  <link rel="canonical" href="https://example.org/" />
-</head>
-<body
-    class="bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white"
-  ><header
-  class="mx-auto flex h-[4.5rem] max-w-(--w) px-8 whitespace-nowrap lg:justify-center"
->
-  <div class="relative z-50 flex items-center ltr:mr-auto rtl:ml-auto">
-    <a
-      class="-translate-y-[1px] text-2xl font-medium"
-      href="https://example.org/"
-      >My New Hugo Site</a
-    >
-    <div
-      class="btn-dark text-[0px] ltr:ml-4 rtl:mr-4 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]"
-      role="button"
-      aria-label="Dark"
-    ></div>
-  </div>
+        <div class="focus-grid reveal">
+          <div class="focus-card">
+            <span>01</span><h3>Controllable Editing</h3><p>Precise changes with strong identity and structure preservation.</p>
+          </div>
+          <div class="focus-card">
+            <span>02</span><h3>Multimodal Reasoning</h3><p>Connecting visual understanding with faithful generative decisions.</p>
+          </div>
+          <div class="focus-card">
+            <span>03</span><h3>Learning & Alignment</h3><p>Better training signals for models that understand nuanced intent.</p>
+          </div>
+        </div>
 
-  <div
-    class="btn-menu relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8"
-    role="button"
-    aria-label="Menu"
-  ></div>
+        <div class="education reveal">
+          <div class="education-label">Education</div>
+          <div class="education-item"><span>2024—2027</span><strong>M.S. in Software Engineering</strong><p>Beihang University · LDMC Lab</p></div>
+          <div class="education-item"><span>2020—2024</span><strong>B.E. in Software Engineering</strong><p>Beihang University · Outstanding Graduate</p></div>
+        </div>
+      </section>
 
-  <script>
-    
-    const htmlClass = document.documentElement.classList;
-    setTimeout(() => {
-      htmlClass.remove('not-ready');
-    }, 10);
+      <section class="contact reveal" id="contact">
+        <p class="eyebrow"><span></span> Get in touch</p>
+        <h2>Have a hard visual<br />problem in mind?</h2>
+        <a class="contact-link" href="mailto:flairando@gmail.com">Let’s explore it together <span aria-hidden="true">↗</span></a>
+        <div class="contact-meta">
+          <a href="mailto:flairando@gmail.com">flairando@gmail.com</a>
+          <a href="https://github.com/Ando233" target="_blank" rel="noreferrer">GitHub / Ando233 ↗</a>
+        </div>
+      </section>
+    </main>
 
-    
-    const btnMenu = document.querySelector('.btn-menu');
-    btnMenu.addEventListener('click', () => {
-      htmlClass.toggle('open');
-    });
+    <footer>
+      <a class="wordmark footer-mark" href="#top"><span class="wordmark-mark">YW</span><span>Yuqi Wang</span></a>
+      <p>Researching the next generation of visual intelligence.</p>
+      <p>© <span data-year></span> Yuqi Wang</p>
+    </footer>
 
-    
-    const metaTheme = document.querySelector('meta[name="theme-color"]');
-    const lightBg = '#faf8f1'.replace(/"/g, '');
-    const setDark = (isDark) => {
-      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
-      htmlClass[isDark ? 'add' : 'remove']('dark');
-      localStorage.setItem('dark', isDark);
-    };
-
-    
-    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-    if (htmlClass.contains('dark')) {
-      setDark(true);
-    } else {
-      const darkVal = localStorage.getItem('dark');
-      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
-    }
-
-    
-    darkScheme.addEventListener('change', (event) => {
-      setDark(event.matches);
-    });
-
-    
-    const btnDark = document.querySelector('.btn-dark');
-    btnDark.addEventListener('click', () => {
-      setDark(localStorage.getItem('dark') !== 'true');
-    });
-  </script>
-
-  <div
-    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full flex-col justify-center bg-(--bg) pb-16 duration-200 select-none lg:static lg:h-auto lg:flex-row lg:bg-transparent! lg:pb-0 lg:transition-none"
-  >
-  </div>
-</header>
-<main
-      class="prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) px-8 pt-14 pb-16"
-    >
-
-<section class="relative my-10 first-of-type:mt-0 last-of-type:mb-0"><h2 class="my-0!">Test</h2>
-  <time class="text-xs antialiased opacity-60"
-    >Nov 3, 2025</time
-  >
-  <a class="absolute inset-0 text-[0px]" href="https://example.org/posts/test/"
-    >Test</a
-  >
-</section></main><footer
-  class="mx-auto flex h-[4.5rem] max-w-(--w) items-center px-8 text-xs tracking-wider uppercase opacity-60"
->
-  <div class="mr-auto">&copy;2025
-    <a class="link" href="https://example.org/">My New Hugo Site</a></div>
-  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
-    >powered by hugo️️</a
-  >️
-  <a
-    class="link"
-    href="https://github.com/nanxiaobei/hugo-paper"
-    rel="noopener"
-    target="_blank"
-    >hugo-paper</a
-  >
-</footer>
-</body>
+    <script src="./script.js"></script>
+  </body>
 </html>
