@@ -243,7 +243,7 @@ button { color: inherit; font: inherit; }
 }
 .paper-diagram img { position: relative; z-index: 1; width: 100%; max-height: 220px; object-fit: contain; filter: saturate(.88) contrast(1.02); }
 .diagram-unicorn { background: #e9e4da; }
-.diagram-unicorn img { transform: scale(1.06); }
+.diagram-unicorn img { width: 94%; transform: none; }
 .diagram-sredit { background: #eadfd7; }
 .diagram-fedpdg { background: #e1e5ef; }
 [data-theme="dark"] .paper-diagram { background: #252923; }
