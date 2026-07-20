@@ -84,12 +84,12 @@
         <div class="hero-copy reveal">
           <p class="eyebrow"><span></span> Generative AI researcher · Beijing</p>
           <h1>
-            I build intelligent systems that <em>understand</em> what to change—
-            <span>and what to preserve.</span>
+            Understand the scene.
+            <span><em>Edit with intent.</em></span>
           </h1>
           <p class="hero-intro">
-            I’m <strong>Yuqi Wang</strong> (王雨琦), a researcher at Beihang University exploring
-            controllable image and video editing, multimodal models, and generative learning.
+            I’m <strong>Yuqi Wang</strong> (王宇奇), a Beihang researcher working on controllable
+            image and video generation.
           </p>
           <div class="hero-links">
             <a class="button button-primary" href="#research">Explore my research <span aria-hidden="true">↓</span></a>
@@ -140,7 +140,7 @@
         </div>
 
         <article class="paper paper-featured reveal">
-          <div class="paper-visual visual-architecture">
+          <div class="paper-visual paper-diagram diagram-unicorn">
             <div class="architecture-label">MULTI-SHOT / 01</div>
             <img
               src="./assets/unicorn-architecture.png"
@@ -168,12 +168,13 @@
         </article>
 
         <article class="paper reveal">
-          <div class="paper-visual visual-reward" aria-hidden="true">
-            <div class="reward-label">SELF-REWARD / 02</div>
-            <div class="reward-scene scene-before"><span>UNDERSTAND</span></div>
-            <div class="reward-core">SIA<br /><i>+</i><br />SRR</div>
-            <div class="reward-scene scene-after"><span>EVALUATE</span></div>
-            <div class="reward-path"></div>
+          <div class="paper-visual paper-diagram diagram-sredit">
+            <div class="architecture-label">SELF-REWARD / 02</div>
+            <img
+              src="./assets/sredit-architecture.png"
+              alt="SREdit architecture: semantic instruction atomization, aligned self-reward, and spatial reward reweighting"
+              loading="lazy"
+            />
             <p>One model. One cognitive loop.</p>
           </div>
           <div class="paper-content">
@@ -194,14 +195,13 @@
         </article>
 
         <article class="paper reveal">
-          <div class="paper-visual visual-fed" aria-hidden="true">
-            <div class="fed-label">FEDERATED / 03</div>
-            <div class="client client-a"><i></i><i></i><i></i></div>
-            <div class="client client-b"><i></i><i></i><i></i><i></i></div>
-            <div class="client client-c"><i></i><i></i></div>
-            <div class="global-model">GLOBAL<br />MODEL</div>
-            <div class="fed-line line-a"></div><div class="fed-line line-b"></div><div class="fed-line line-c"></div>
-            <div class="fed-score">Δ prediction</div>
+          <div class="paper-visual paper-diagram diagram-fedpdg">
+            <div class="architecture-label">FEDERATED / 03</div>
+            <img
+              src="./assets/fedpdg-architecture.png"
+              alt="FedPDG architecture: personalized diffusion generation, prediction discrepancy selection, and client data augmentation"
+              loading="lazy"
+            />
             <p>Generate what each client lacks.</p>
           </div>
           <div class="paper-content">
