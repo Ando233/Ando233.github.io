@@ -3,32 +3,45 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f4f0e8" />
+    <meta name="theme-color" content="#f3f4f0" />
     <meta
       name="description"
-      content="The personal website of Yuqi Wang: research in generative AI, music, philosophy, and notes along the way."
+      content="The personal website of Yuqi Wang: visual intelligence research, open source, music, philosophy, and notes."
     />
     <meta name="author" content="Yuqi Wang" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Yuqi Wang - Research, Music & Philosophy" />
+    <meta property="og:title" content="Yuqi Wang - Visual Intelligence Researcher" />
     <meta
       property="og:description"
-      content="A personal space for generative AI research, R&B and hip-hop, philosophy, and notes."
+      content="Research in controllable image and video generation, plus music, philosophy, and personal notes."
     />
     <meta property="og:url" content="https://ando233.github.io/" />
     <meta property="og:image" content="https://ando233.github.io/assets/og-personal.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="canonical" href="https://ando233.github.io/" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="preload" as="image" href="./assets/hero-editorial.webp" type="image/webp" />
+    <link rel="stylesheet" href="./styles.css?v=3" />
     <link rel="icon" href="./favicon.ico" sizes="any" />
-    <title>Yuqi Wang - Research, Music & Philosophy</title>
+    <title>Yuqi Wang - Visual Intelligence Researcher</title>
+    <script>
+      try {
+        const theme = localStorage.getItem("theme");
+        if (theme === "dark" || (!theme && matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.dataset.theme = "dark";
+        }
+      } catch {}
+    </script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Yuqi Wang",
+        "alternateName": "王宇奇",
         "url": "https://ando233.github.io/",
-        "sameAs": ["https://github.com/Ando233"],
+        "sameAs": [
+          "https://github.com/Ando233",
+          "https://github.com/huggingface/diffusers/pull/13046"
+        ],
         "affiliation": {
           "@type": "CollegeOrUniversity",
           "name": "Beihang University"
@@ -48,11 +61,12 @@
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
+    <div class="header-sentinel" data-header-sentinel aria-hidden="true"></div>
 
     <header class="site-header" data-header>
       <a class="wordmark" href="#top" aria-label="Yuqi Wang, home">
         <span class="wordmark-mark">YW</span>
-        <span>Yuqi Wang</span>
+        <span class="wordmark-name">Yuqi Wang</span>
       </a>
 
       <nav class="desktop-nav" aria-label="Primary navigation">
@@ -65,240 +79,254 @@
       </nav>
 
       <div class="header-actions">
-        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme">
-          <span class="theme-icon" aria-hidden="true">◐</span>
+        <button
+          class="theme-toggle"
+          type="button"
+          data-theme-toggle
+          aria-label="Switch to dark theme"
+          aria-pressed="false"
+        >
+          <span aria-hidden="true">◐</span>
         </button>
-        <a class="header-contact" href="mailto:flairando@gmail.com">Let’s talk <span aria-hidden="true">↗</span></a>
-        <button class="menu-toggle" type="button" data-menu-toggle aria-label="Open navigation" aria-expanded="false">
+        <a class="header-contact" href="mailto:flairando@gmail.com">Email me</a>
+        <button
+          class="menu-toggle"
+          type="button"
+          data-menu-toggle
+          aria-label="Open navigation"
+          aria-controls="mobile-nav"
+          aria-expanded="false"
+        >
           <span></span><span></span>
         </button>
       </div>
 
-      <nav class="mobile-nav" data-mobile-nav aria-label="Mobile navigation">
+      <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="Mobile navigation">
         <a href="#research">Research</a>
         <a href="#experience">Experience</a>
         <a href="#about">About</a>
         <a href="#interests">Interests</a>
         <a href="#blog">Blog</a>
         <a href="./notes/">Notes / 随笔</a>
-        <a href="mailto:flairando@gmail.com">Email me ↗</a>
+        <a href="mailto:flairando@gmail.com">Email me</a>
       </nav>
     </header>
 
     <main id="main">
       <section class="hero" id="top">
-        <div class="hero-orb orb-one" aria-hidden="true"></div>
-        <div class="hero-orb orb-two" aria-hidden="true"></div>
-
-        <div class="hero-copy reveal">
-          <p class="eyebrow"><span></span> Researcher · maker · listener · reader</p>
-          <h1>
-            Think deeply.
-            <span><em>Make with intent.</em></span>
+        <div class="hero-copy">
+          <p class="hero-kicker reveal">Visual intelligence researcher</p>
+          <h1 class="reveal">
+            Yuqi Wang
+            <span lang="zh-CN">王宇奇</span>
           </h1>
-          <p class="hero-intro">
-            I’m <strong>Yuqi Wang</strong> (王宇奇), a visual intelligence researcher, an R&B and
-            hip-hop listener, and a reader of philosophy.
+          <p class="hero-intro reveal">
+            I build controllable generative systems for images and video, then follow the same
+            curiosity into music and philosophy.
           </p>
-          <div class="hero-links">
-            <a class="button button-primary" href="#about">A little about me <span aria-hidden="true">↓</span></a>
-            <a class="text-link" href="https://github.com/Ando233" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+          <div class="hero-actions reveal">
+            <a class="button button-primary" href="#research">View research</a>
+            <a class="button button-quiet" href="https://github.com/Ando233" target="_blank" rel="noreferrer">
+              GitHub <span aria-hidden="true">↗</span>
+            </a>
           </div>
         </div>
 
-        <div class="research-map reveal" aria-label="Personal interest map">
-          <div class="map-topline">
-            <span>Personal atlas</span>
-            <span>BEIJING / NOW</span>
+        <figure class="hero-visual reveal">
+          <div class="hero-image-wrap">
+            <img
+              src="./assets/hero-editorial.webp"
+              width="1122"
+              height="1402"
+              alt="Editorial still life of film strips, optical glass, geometric studies, and a cobalt audio waveform"
+              fetchpriority="high"
+            />
           </div>
-          <div class="map-canvas">
-            <div class="orbit orbit-a"></div>
-            <div class="orbit orbit-b"></div>
-            <div class="map-node map-node-main">
-              <span class="node-index">01</span>
-              <strong>Curiosity</strong>
-            </div>
-            <div class="map-node node-image"><span>02</span> Visual<br />Intelligence</div>
-            <div class="map-node node-video"><span>03</span> R&B ×<br />Hip-Hop</div>
-            <div class="map-node node-mllm"><span>04</span> Philosophy</div>
-            <div class="map-signal signal-a"></div>
-            <div class="map-signal signal-b"></div>
-            <div class="map-signal signal-c"></div>
-          </div>
-          <p class="map-caption">
-            One life, many frequencies: models, music, and questions.
-          </p>
-        </div>
-
-        <div class="hero-foot reveal">
-          <p>Researching visual intelligence</p>
-          <p>Listening closely · Reading widely</p>
-        </div>
+          <figcaption>A visual study of frames, signals, and latent spaces.</figcaption>
+        </figure>
       </section>
 
-      <section class="section publications" id="research">
-        <div class="section-heading reveal">
-          <div>
-            <p class="section-number">01 / Selected publications</p>
-            <h2>Research that turns<br />intent into pixels.</h2>
-          </div>
-          <p class="section-note">
-            My work centers on one question: how can generative models follow complex human intent
-            while preserving everything that should remain untouched?
+      <section class="section research" id="research">
+        <header class="section-intro reveal">
+          <p class="section-label">Selected research</p>
+          <h2>Models that edit without losing the thread.</h2>
+          <p>
+            I work on generative systems that follow complex intent while preserving identity,
+            structure, and context.
           </p>
+        </header>
+
+        <div class="project-grid">
+          <article class="project project-featured reveal">
+            <figure class="project-media project-media-wide">
+              <img
+                src="./assets/unicorn-architecture.png"
+                width="2079"
+                height="600"
+                alt="Unicorn architecture with shot-aware planning, in-context keyframe editing, and keyframe-anchored video editing"
+                loading="lazy"
+              />
+              <figcaption>Shot-aware planning and keyframe-anchored video editing.</figcaption>
+            </figure>
+            <div class="project-copy">
+              <div class="project-meta">
+                <span>AAAI 2027 / Under review</span>
+                <span>First author</span>
+              </div>
+              <h3>Unicorn: Controllable Multi-Shot Video Editing Framework via Shot-wise Keyframe Anchors</h3>
+              <p>
+                The first controllable framework for multi-shot video editing. Unicorn combines
+                shot-aware planning, in-context keyframe editing, and edited-frame anchors, improving
+                the strongest baseline by 8.94% on MultiShotBench.
+              </p>
+              <ul class="topic-line" aria-label="Research topics">
+                <li>Video editing</li>
+                <li>Shot localization</li>
+                <li>Cross-shot consistency</li>
+              </ul>
+              <span class="project-status">Manuscript available after review</span>
+            </div>
+          </article>
+
+          <div class="project-pair">
+            <article class="project project-secondary reveal">
+              <figure class="project-media">
+                <img
+                  src="./assets/sredit-architecture.png"
+                  width="2102"
+                  height="1067"
+                  alt="SREdit architecture with semantic instruction atomization, aligned self-reward, and spatial reward reweighting"
+                  loading="lazy"
+                />
+                <figcaption>A unified self-rewarding loop for image editing.</figcaption>
+              </figure>
+              <div class="project-copy">
+                <div class="project-meta">
+                  <span>ACM MM 2026 / Accepted</span>
+                  <span>First author</span>
+                </div>
+                <h3>SREdit: A Self-Rewarding Framework with Intrinsically Aligned Critic for Image Editing</h3>
+                <p>
+                  Aligns instruction understanding with reward evaluation in one model, reducing
+                  semantic drift in reinforcement-learning-based image editing.
+                </p>
+                <ul class="topic-line" aria-label="Research topics">
+                  <li>Image editing</li>
+                  <li>Self-rewarding</li>
+                  <li>MLLM-DiT</li>
+                </ul>
+                <span class="project-status">Final paper coming soon</span>
+              </div>
+            </article>
+
+            <article class="project project-secondary reveal">
+              <figure class="project-media">
+                <img
+                  src="./assets/fedpdg-architecture.png"
+                  width="1722"
+                  height="1064"
+                  alt="FedPDG architecture with personalized diffusion generation, prediction discrepancy selection, and client data augmentation"
+                  loading="lazy"
+                />
+                <figcaption>Generate the data each federated client lacks.</figcaption>
+              </figure>
+              <div class="project-copy">
+                <div class="project-meta">
+                  <span>ICML 2026 / Poster</span>
+                  <span>First author, equal contribution</span>
+                </div>
+                <h3>FedPDG: Prediction Discrepancy-Guided Data Generation for Heterogeneous Federated Learning</h3>
+                <p>
+                  Uses prediction discrepancy to discover missing local data and guide personalized
+                  diffusion generation, improving heterogeneous federated learning by up to 3.82%.
+                </p>
+                <ul class="topic-line" aria-label="Research topics">
+                  <li>Federated learning</li>
+                  <li>Diffusion</li>
+                  <li>DPO</li>
+                </ul>
+                <a class="inline-link" href="./papers/fedpdg.pdf" target="_blank" rel="noreferrer">
+                  Read paper <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            </article>
+          </div>
         </div>
-
-        <article class="paper paper-featured reveal">
-          <div class="paper-visual paper-diagram diagram-unicorn">
-            <div class="architecture-label">MULTI-SHOT / 01</div>
-            <img
-              src="./assets/unicorn-architecture.png"
-              alt="Unicorn architecture: shot-aware keyframe planning, in-context image editing, and keyframe-anchored video editing"
-              loading="lazy"
-            />
-            <p>Shot-wise keyframe anchors</p>
-          </div>
-          <div class="paper-content">
-            <div class="paper-meta">
-              <span class="venue venue-review">AAAI 2027 · Under review</span>
-              <span>First author</span>
-            </div>
-            <h3>Unicorn: Controllable Multi-Shot Video Editing Framework via Shot-wise Keyframe Anchors</h3>
-            <p>
-              The first controllable framework for multi-shot video editing, combining shot-aware
-              planning, in-context keyframe editing, and edited-frame anchors. Unicorn improves the
-              strongest baseline by 8.94% on MultiShotBench while preserving cross-shot identity.
-            </p>
-            <ul class="paper-tags" aria-label="Topics">
-              <li>Video editing</li><li>Shot localization</li><li>Cross-shot consistency</li>
-            </ul>
-            <span class="paper-status">Manuscript available after review</span>
-          </div>
-        </article>
-
-        <article class="paper reveal">
-          <div class="paper-visual paper-diagram diagram-sredit">
-            <div class="architecture-label">SELF-REWARD / 02</div>
-            <img
-              src="./assets/sredit-architecture.png"
-              alt="SREdit architecture: semantic instruction atomization, aligned self-reward, and spatial reward reweighting"
-              loading="lazy"
-            />
-            <p>One model. One cognitive loop.</p>
-          </div>
-          <div class="paper-content">
-            <div class="paper-meta">
-              <span class="venue">ACM MM 2026 · Accepted</span>
-              <span>First author</span>
-            </div>
-            <h3>SREdit: A Self-Rewarding Framework with Intrinsically Aligned Critic for Image Editing</h3>
-            <p>
-              A unified self-rewarding framework that aligns instruction understanding with reward
-              evaluation, reducing semantic drift in reinforcement-learning-based image editing.
-            </p>
-            <ul class="paper-tags" aria-label="Topics">
-              <li>Image editing</li><li>Self-rewarding</li><li>MLLM-DiT</li>
-            </ul>
-            <span class="paper-status">Final paper coming soon</span>
-          </div>
-        </article>
-
-        <article class="paper reveal">
-          <div class="paper-visual paper-diagram diagram-fedpdg">
-            <div class="architecture-label">FEDERATED / 03</div>
-            <img
-              src="./assets/fedpdg-architecture.png"
-              alt="FedPDG architecture: personalized diffusion generation, prediction discrepancy selection, and client data augmentation"
-              loading="lazy"
-            />
-            <p>Generate what each client lacks.</p>
-          </div>
-          <div class="paper-content">
-            <div class="paper-meta">
-              <span class="venue">ICML 2026 · Poster</span>
-              <span>First author · Equal contribution</span>
-            </div>
-            <h3>FedPDG: Prediction Discrepancy-Guided Data Generation for Heterogeneous Federated Learning</h3>
-            <p>
-              Uses model prediction discrepancy to discover missing local data and guide diffusion-based
-              generation, improving heterogeneous federated learning by up to 3.82%.
-            </p>
-            <ul class="paper-tags" aria-label="Topics">
-              <li>Federated learning</li><li>Diffusion</li><li>DPO</li>
-            </ul>
-            <a class="paper-link" href="./papers/fedpdg.pdf" target="_blank">Read paper <span aria-hidden="true">↗</span></a>
-          </div>
-        </article>
       </section>
 
       <section class="section experience" id="experience">
-        <div class="section-heading reveal">
-          <div>
-            <p class="section-number">02 / Experience</p>
-            <h2>Research, built for<br />the real world.</h2>
+        <div class="experience-layout">
+          <header class="experience-heading reveal">
+            <h2>Experience</h2>
+            <p>
+              Carrying research from an uncertain question to a system people can actually use.
+            </p>
+          </header>
+
+          <div class="role-list">
+            <article class="role reveal">
+              <div class="role-meta">
+                <time>2026.05 - Present</time>
+                <span>Beijing</span>
+              </div>
+              <div class="role-body">
+                <h3>Kuaishou <span lang="zh-CN">快手</span></h3>
+                <p class="role-position">AIGC Algorithm Intern / Commercial Technology, Safety & Ecosystem</p>
+                <p>
+                  Leading research on multi-shot video editing and building MultiShotBench, an
+                  evaluation suite for instruction following, shot-level fidelity, visual quality,
+                  and motion.
+                </p>
+                <ul class="topic-line" aria-label="Role topics">
+                  <li>Video editing</li>
+                  <li>Qwen-Image-Edit</li>
+                  <li>Evaluation</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="role reveal">
+              <div class="role-meta">
+                <time>2024.10 - 2026.05</time>
+                <span>Beijing</span>
+              </div>
+              <div class="role-body">
+                <h3>Meituan <span lang="zh-CN">美团</span></h3>
+                <p class="role-position">AIGC Algorithm Intern / Digital Human & Creative Generation</p>
+                <p>
+                  Developed multi-element image composition and an end-to-end long-video auto-editing
+                  pipeline. The production system processed 1,000+ videos daily, improved editing
+                  efficiency by 8x, and lifted completion rate by about 12%.
+                </p>
+                <ul class="topic-line" aria-label="Role topics">
+                  <li>Long-video understanding</li>
+                  <li>VLM</li>
+                  <li>Production AI</li>
+                </ul>
+              </div>
+            </article>
           </div>
-          <p class="section-note">
-            From long-form video understanding to controllable generation, I enjoy carrying ideas
-            all the way from a research question to a working system.
-          </p>
-        </div>
-
-        <div class="timeline">
-          <article class="role reveal">
-            <div class="role-date">2026.05 - Present</div>
-            <div class="role-main">
-              <div class="role-title"><h3>Kuaishou</h3><span>快手</span></div>
-              <p class="role-subtitle">AIGC Algorithm Intern · Commercial Technology, Safety & Ecosystem</p>
-              <p>
-                Leading research on multi-shot video editing and building MultiShotBench, an evaluation
-                suite spanning instruction following, shot-level fidelity, visual quality, and motion.
-              </p>
-              <div class="role-skills"><span>Video editing</span><span>Qwen-Image-Edit</span><span>Evaluation</span></div>
-            </div>
-            <div class="role-index">01</div>
-          </article>
-
-          <article class="role reveal">
-            <div class="role-date">2024.10 - 2026.05</div>
-            <div class="role-main">
-              <div class="role-title"><h3>Meituan</h3><span>美团</span></div>
-              <p class="role-subtitle">AIGC Algorithm Intern · Digital Human & Creative Generation</p>
-              <p>
-                Developed multi-element image composition and an end-to-end long-video auto-editing
-                pipeline. The production system processed 1,000+ videos daily, improved editing efficiency
-                by 8×, and lifted completion rate by about 12%.
-              </p>
-              <div class="role-skills"><span>Long-video understanding</span><span>VLM</span><span>Production AI</span></div>
-            </div>
-            <div class="role-index">02</div>
-          </article>
         </div>
 
         <div class="open-source reveal" aria-labelledby="open-source-title">
-          <div class="open-source-intro">
+          <div class="open-source-heading">
             <h3 id="open-source-title">Open source</h3>
-            <p>Research ideas, reproduced carefully and shipped as reusable model components.</p>
+            <p>Upstream work that turns papers into reusable implementations.</p>
           </div>
-
-          <div class="contribution-list">
+          <div class="contribution-grid">
             <a
-              class="contribution"
+              class="contribution contribution-primary"
               href="https://github.com/huggingface/diffusers/pull/13046"
               target="_blank"
               rel="noreferrer"
             >
-              <div class="contribution-repo">
-                <span>huggingface/diffusers</span>
-                <small>Merged PR #13046</small>
-              </div>
-              <div class="contribution-body">
-                <h4>Diffusion Transformers with Representation Autoencoders</h4>
-                <p>
-                  Reproduced the paper and engineered its RAE autoencoder for the Diffusers library,
-                  taking the implementation through upstream review and merge.
-                </p>
-              </div>
-              <span class="contribution-arrow" aria-hidden="true">↗</span>
+              <span class="contribution-repo">huggingface/diffusers</span>
+              <strong>Diffusion Transformers with Representation Autoencoders</strong>
+              <p>
+                Reproduced the paper and engineered its RAE autoencoder for Diffusers. PR #13046
+                passed upstream review and was merged.
+              </p>
+              <span class="contribution-link">View merged PR <span aria-hidden="true">↗</span></span>
             </a>
 
             <a
@@ -307,145 +335,152 @@
               target="_blank"
               rel="noreferrer"
             >
-              <div class="contribution-repo">
-                <span>duoan/TorchCode</span>
-                <small>Maintainer</small>
-              </div>
-              <div class="contribution-body">
-                <h4>Core generative model modules</h4>
-                <p>
-                  Maintain the project and contribute implementation exercises for core components,
-                  including GRPO loss and the DiT Block.
-                </p>
-              </div>
-              <span class="contribution-arrow" aria-hidden="true">↗</span>
+              <span class="contribution-repo">duoan/TorchCode</span>
+              <strong>Core generative model modules</strong>
+              <p>
+                Maintain the project and contribute implementation exercises for GRPO loss, the DiT
+                Block, and other core components.
+              </p>
+              <span class="contribution-link">View repository <span aria-hidden="true">↗</span></span>
             </a>
           </div>
         </div>
       </section>
 
       <section class="section about" id="about">
-        <div class="about-grid">
-          <div class="about-statement reveal">
-            <p class="section-number">03 / About</p>
-            <h2>Curious about how we <em>see, think,</em> and <em>create.</em></h2>
-          </div>
+        <div class="about-statement reveal">
+          <h2>I care about how models see, decide, and preserve what matters.</h2>
+        </div>
+
+        <div class="about-layout">
           <div class="about-copy reveal">
             <p>
               I’m a master’s student in Software Engineering at <strong>Beihang University</strong>,
-              advised by Prof. Jianwei Niu in the LDMC Lab. My research spans diffusion and flow-matching
-              models, multimodal language models, and reinforcement learning for visual generation.
+              advised by Prof. Jianwei Niu in the LDMC Lab. My research spans diffusion and
+              flow-matching models, multimodal language models, and reinforcement learning for visual
+              generation.
             </p>
             <p>
-              Before graduate school, I completed my bachelor’s degree at Beihang, where I was named an
-              Outstanding Graduate and received national first prizes in mathematical modeling and compiler design.
+              Before graduate school, I completed my bachelor’s degree at Beihang, where I was named
+              an Outstanding Graduate and received national first prizes in mathematical modeling
+              and compiler design.
             </p>
             <p>
-              Outside the lab, I spend time with R&B and hip-hop, drawn to rhythm, texture, and voice.
-              I also read philosophy, returning to questions of mind, freedom, meaning, and how to live.
+              Outside the lab, I listen closely to R&B and hip-hop and read philosophy, returning to
+              questions of mind, freedom, meaning, and how to live.
             </p>
+          </div>
+
+          <div class="education reveal">
+            <h3>Education</h3>
+            <div class="education-item">
+              <time>2024-2027</time>
+              <strong>M.S. in Software Engineering</strong>
+              <p>Beihang University / LDMC Lab</p>
+            </div>
+            <div class="education-item">
+              <time>2020-2024</time>
+              <strong>B.E. in Software Engineering</strong>
+              <p>Beihang University / Outstanding Graduate</p>
+            </div>
           </div>
         </div>
 
-        <div class="focus-grid reveal">
-          <div class="focus-card">
-            <span>01</span><h3>Controllable Editing</h3><p>Precise changes with strong identity and structure preservation.</p>
-          </div>
-          <div class="focus-card">
-            <span>02</span><h3>Multimodal Reasoning</h3><p>Connecting visual understanding with faithful generative decisions.</p>
-          </div>
-          <div class="focus-card">
-            <span>03</span><h3>Learning & Alignment</h3><p>Better training signals for models that understand nuanced intent.</p>
-          </div>
-        </div>
-
-        <div class="education reveal">
-          <div class="education-label">Education</div>
-          <div class="education-item"><span>2024-2027</span><strong>M.S. in Software Engineering</strong><p>Beihang University · LDMC Lab</p></div>
-          <div class="education-item"><span>2020-2024</span><strong>B.E. in Software Engineering</strong><p>Beihang University · Outstanding Graduate</p></div>
+        <div class="focus-list reveal" aria-label="Research focus">
+          <article>
+            <h3>Controllable editing</h3>
+            <p>Precise changes with strong identity and structure preservation.</p>
+          </article>
+          <article>
+            <h3>Multimodal reasoning</h3>
+            <p>Visual understanding that leads to faithful generative decisions.</p>
+          </article>
+          <article>
+            <h3>Learning and alignment</h3>
+            <p>Better training signals for models that understand nuanced intent.</p>
+          </article>
         </div>
       </section>
 
       <section class="section interests" id="interests">
-        <div class="section-heading reveal">
-          <div>
-            <p class="section-number">04 / Interests</p>
-            <h2>Life beyond<br />the lab.</h2>
-          </div>
-          <p class="section-note">
-            Research is one way I make sense of the world. Music and philosophy are two others.
-          </p>
-        </div>
+        <header class="interests-heading reveal">
+          <h2>Life beyond the lab.</h2>
+          <p>Music and philosophy are not side notes. They shape how I listen, question, and work.</p>
+        </header>
 
-        <div class="interest-grid reveal">
-          <article class="interest-card interest-music">
-            <div class="interest-topline"><span>Listening / 01</span><span>♪</span></div>
-            <div class="equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-            <h3>R&B & Hip-Hop</h3>
-            <p>Groove, texture, sampling, and the way a voice can carry a lived world.</p>
-          </article>
-          <article class="interest-card interest-philosophy">
-            <div class="interest-topline"><span>Thinking / 02</span><span>◎</span></div>
-            <div class="thought-orbit" aria-hidden="true"><i></i></div>
-            <h3>Philosophy</h3>
-            <p>Questions of mind, freedom, meaning, and the relationship between thought and action.</p>
-          </article>
-          <article class="interest-card interest-credo">
-            <div class="interest-topline"><span>Credo / 03</span><span>心</span></div>
-            <blockquote lang="zh">应无所住，<br />而生其心</blockquote>
-            <p>A line I return to: remain open, and let the mind arise without clinging.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section blog" id="blog">
-        <div class="section-heading reveal">
-          <div>
-            <p class="section-number">05 / Personal blog</p>
-            <h2>Notes beyond<br />the paper.</h2>
-          </div>
-          <p class="section-note">
-            A future home for research notes, music, philosophy, and ideas worth keeping.
-          </p>
-        </div>
-
-        <div class="blog-shell reveal">
-          <div class="blog-status" aria-hidden="true">
-            <span class="blog-status-label">Notebook / 00</span>
-            <div class="blog-status-mark"><strong>OPEN</strong><span>Notes page is live</span></div>
-          </div>
-          <div class="blog-intro">
-            <p class="blog-kicker">Personal notes · 随笔</p>
-            <h3>A place for the work behind the work.</h3>
-            <p>
-              I’ll use this space to document experiments, research process, records I’m listening
-              to, books I’m reading, and the occasional thought outside the lab.
-            </p>
-            <div class="blog-topics" aria-label="Planned blog topics">
-              <span>Research notes</span><span>Music</span><span>Philosophy</span><span>Ideas & life</span>
+        <div class="interest-grid">
+          <article class="interest-card interest-music reveal">
+            <figure>
+              <img
+                src="./assets/og-personal.png"
+                width="1200"
+                height="630"
+                alt="Yuqi Wang brand artwork combining circular research diagrams and an audio waveform"
+                loading="lazy"
+              />
+              <figcaption>Research, music, and philosophy share the same field of attention.</figcaption>
+            </figure>
+            <div>
+              <h3>R&B and hip-hop</h3>
+              <p>Groove, texture, sampling, and the way a voice can carry a lived world.</p>
             </div>
-            <a class="blog-action" href="./notes/">进入随笔 <span aria-hidden="true">↗</span></a>
-          </div>
+          </article>
+
+          <article class="interest-card interest-philosophy reveal">
+            <h3>Philosophy</h3>
+            <p class="interest-large">Mind. Freedom. Meaning. Action.</p>
+            <p>Questions worth keeping open, especially when the work moves quickly.</p>
+          </article>
+
+          <article class="interest-card interest-credo reveal">
+            <blockquote lang="zh-CN">应无所住，<br />而生其心</blockquote>
+            <p>Remain open, and let the mind arise without clinging.</p>
+          </article>
         </div>
       </section>
 
-      <section class="contact reveal" id="contact">
-        <p class="eyebrow"><span></span> Get in touch</p>
-        <h2>Have an idea, a question,<br />or a track to share?</h2>
-        <a class="contact-link" href="mailto:flairando@gmail.com">Let’s talk <span aria-hidden="true">↗</span></a>
-        <div class="contact-meta">
-          <a href="mailto:flairando@gmail.com">flairando@gmail.com</a>
-          <a href="https://github.com/Ando233" target="_blank" rel="noreferrer">GitHub / Ando233 ↗</a>
+      <section class="section writing" id="blog">
+        <header class="section-intro reveal">
+          <p class="section-label">Personal notes</p>
+          <h2>Short thoughts, kept before they disappear.</h2>
+        </header>
+
+        <a class="note-preview reveal" href="./notes/">
+          <div class="note-preview-meta">
+            <time datetime="2026-07-27">2026.07.27</time>
+            <span>序</span>
+          </div>
+          <div class="note-preview-body">
+            <h3 lang="zh-CN">留白，也是一种开始。</h3>
+            <p lang="zh-CN">记录那些不必完整，却值得留下的念头。</p>
+          </div>
+          <span class="note-preview-link">Read notes <span aria-hidden="true">↗</span></span>
+        </a>
+      </section>
+
+      <section class="section contact reveal" id="contact">
+        <div>
+          <h2>Research idea, difficult question, or a track worth hearing?</h2>
+          <p>I’m always happy to compare notes.</p>
+        </div>
+        <div class="contact-actions">
+          <a class="button button-primary" href="mailto:flairando@gmail.com">Email me</a>
+          <a class="inline-link" href="https://github.com/Ando233" target="_blank" rel="noreferrer">
+            GitHub <span aria-hidden="true">↗</span>
+          </a>
         </div>
       </section>
     </main>
 
     <footer>
-      <a class="wordmark footer-mark" href="#top"><span class="wordmark-mark">YW</span><span>Yuqi Wang</span></a>
-      <p>Research · Music · Philosophy · Notes</p>
+      <a class="wordmark footer-mark" href="#top">
+        <span class="wordmark-mark">YW</span>
+        <span>Yuqi Wang</span>
+      </a>
+      <p>Research / Music / Philosophy / Notes</p>
       <p>© <span data-year></span> Yuqi Wang</p>
     </footer>
 
-    <script src="./script.js"></script>
+    <script src="./script.js?v=3"></script>
   </body>
 </html>

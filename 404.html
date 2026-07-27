@@ -3,15 +3,33 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="refresh" content="3; url=/" />
-    <link rel="stylesheet" href="/styles.css" />
-    <title>Page not found — Yuqi Wang</title>
+    <meta name="theme-color" content="#f3f4f0" />
+    <meta name="robots" content="noindex" />
+    <link rel="stylesheet" href="/styles.css?v=3" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <title>Page not found - Yuqi Wang</title>
+    <script>
+      try {
+        const theme = localStorage.getItem("theme");
+        if (theme === "dark" || (!theme && matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.dataset.theme = "dark";
+        }
+      } catch {}
+    </script>
   </head>
-  <body>
-    <main class="contact" style="margin-top: 10vh">
-      <p class="eyebrow"><span></span> 404</p>
-      <h2>This page wandered off.</h2>
-      <a class="contact-link" href="/">Back home ↗</a>
+  <body class="error-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <main class="error-main" id="main">
+      <a class="wordmark" href="/" aria-label="Yuqi Wang, home">
+        <span class="wordmark-mark">YW</span>
+        <span>Yuqi Wang</span>
+      </a>
+      <div class="error-copy">
+        <p class="section-label">Page not found</p>
+        <h1>Nothing lives at this address.</h1>
+        <p>The page may have moved, or the link may be incomplete.</p>
+        <a class="button button-primary" href="/">Return home</a>
+      </div>
     </main>
   </body>
 </html>

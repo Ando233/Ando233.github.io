@@ -1,38 +1,90 @@
 const root = document.documentElement;
 const themeToggle = document.querySelector("[data-theme-toggle]");
-const savedTheme = localStorage.getItem("theme");
-const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+const systemDark = window.matchMedia("(prefers-color-scheme: dark)");
+let savedTheme = null;
 
-if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
-  root.dataset.theme = "dark";
-}
+try {
+  savedTheme = localStorage.getItem("theme");
+} catch {}
+
+const applyTheme = (theme) => {
+  if (theme === "dark") {
+    root.dataset.theme = "dark";
+  } else {
+    delete root.dataset.theme;
+  }
+
+  const isDark = theme === "dark";
+  document
+    .querySelector('meta[name="theme-color"]')
+    ?.setAttribute("content", isDark ? "#111412" : "#f3f4f0");
+  themeToggle?.setAttribute("aria-pressed", String(isDark));
+  themeToggle?.setAttribute("aria-label", `Switch to ${isDark ? "light" : "dark"} theme`);
+};
+
+applyTheme(savedTheme || (systemDark.matches ? "dark" : "light"));
 
 themeToggle?.addEventListener("click", () => {
   const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
-  root.dataset.theme = nextTheme;
-  localStorage.setItem("theme", nextTheme);
+  try {
+    localStorage.setItem("theme", nextTheme);
+  } catch {}
+  applyTheme(nextTheme);
+});
+
+systemDark.addEventListener("change", (event) => {
+  let hasSavedTheme = false;
+  try {
+    hasSavedTheme = Boolean(localStorage.getItem("theme"));
+  } catch {}
+  if (!hasSavedTheme) {
+    applyTheme(event.matches ? "dark" : "light");
+  }
 });
 
 const header = document.querySelector("[data-header]");
-const updateHeader = () => header?.classList.toggle("scrolled", window.scrollY > 20);
-updateHeader();
-window.addEventListener("scroll", updateHeader, { passive: true });
+const headerSentinel = document.querySelector("[data-header-sentinel]");
+
+if (header && headerSentinel && "IntersectionObserver" in window) {
+  const headerObserver = new IntersectionObserver(
+    ([entry]) => header.classList.toggle("scrolled", !entry.isIntersecting),
+    { threshold: 0 }
+  );
+  headerObserver.observe(headerSentinel);
+} else {
+  header?.classList.add("scrolled");
+}
 
 const menuToggle = document.querySelector("[data-menu-toggle]");
 const mobileNav = document.querySelector("[data-mobile-nav]");
 
 const closeMenu = () => {
   menuToggle?.setAttribute("aria-expanded", "false");
+  menuToggle?.setAttribute("aria-label", "Open navigation");
   mobileNav?.classList.remove("open");
+  document.body.classList.remove("menu-open");
 };
 
 menuToggle?.addEventListener("click", () => {
-  const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
-  menuToggle.setAttribute("aria-expanded", String(!isOpen));
-  mobileNav?.classList.toggle("open", !isOpen);
+  const nextOpen = menuToggle.getAttribute("aria-expanded") !== "true";
+  menuToggle.setAttribute("aria-expanded", String(nextOpen));
+  menuToggle.setAttribute("aria-label", nextOpen ? "Close navigation" : "Open navigation");
+  mobileNav?.classList.toggle("open", nextOpen);
+  document.body.classList.toggle("menu-open", nextOpen);
+
+  if (nextOpen) {
+    mobileNav?.querySelector("a")?.focus();
+  }
 });
 
 mobileNav?.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && menuToggle?.getAttribute("aria-expanded") === "true") {
+    closeMenu();
+    menuToggle?.focus();
+  }
+});
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const revealItems = document.querySelectorAll(".reveal");
@@ -40,18 +92,20 @@ const revealItems = document.querySelectorAll(".reveal");
 if (reduceMotion || !("IntersectionObserver" in window)) {
   revealItems.forEach((item) => item.classList.add("visible"));
 } else {
-  const observer = new IntersectionObserver(
+  const revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
+          revealObserver.unobserve(entry.target);
         }
       });
     },
-    { threshold: 0.12 }
+    { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
   );
-  revealItems.forEach((item) => observer.observe(item));
+
+  revealItems.forEach((item) => revealObserver.observe(item));
 }
 
-document.querySelector("[data-year]").textContent = new Date().getFullYear();
+const year = document.querySelector("[data-year]");
+if (year) year.textContent = new Date().getFullYear();
