@@ -87,12 +87,10 @@ document.addEventListener("keydown", (event) => {
 });
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const revealItems = document.querySelectorAll(".reveal");
+let revealObserver = null;
 
-if (reduceMotion || !("IntersectionObserver" in window)) {
-  revealItems.forEach((item) => item.classList.add("visible"));
-} else {
-  const revealObserver = new IntersectionObserver(
+if (!reduceMotion && "IntersectionObserver" in window) {
+  revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -103,9 +101,19 @@ if (reduceMotion || !("IntersectionObserver" in window)) {
     },
     { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
   );
-
-  revealItems.forEach((item) => revealObserver.observe(item));
 }
+
+window.initializeReveals = (items = document.querySelectorAll(".reveal")) => {
+  items.forEach((item) => {
+    if (!revealObserver) {
+      item.classList.add("visible");
+    } else {
+      revealObserver.observe(item);
+    }
+  });
+};
+
+window.initializeReveals();
 
 const year = document.querySelector("[data-year]");
 if (year) year.textContent = new Date().getFullYear();

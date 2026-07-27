@@ -6,19 +6,19 @@
     <meta name="theme-color" content="#f3f4f0" />
     <meta
       name="description"
-      content="王宇奇的随笔：研究之外，记录音乐、哲学、阅读、生活和偶然出现的念头。"
+      content="王宇奇的生活区：用文字和照片记录研究之外的音乐、阅读、行走与普通日常。"
     />
     <meta name="author" content="Yuqi Wang" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="随笔 - Yuqi Wang" />
-    <meta property="og:description" content="一些尚未长成文章，却值得留下的东西。" />
-    <meta property="og:url" content="https://ando233.github.io/notes/" />
+    <meta property="og:title" content="生活 - Yuqi Wang" />
+    <meta property="og:description" content="文字与影像组成的开放生活档案。" />
+    <meta property="og:url" content="https://ando233.github.io/life/" />
     <meta property="og:image" content="https://ando233.github.io/assets/og-personal.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="canonical" href="https://ando233.github.io/notes/" />
+    <link rel="canonical" href="https://ando233.github.io/life/" />
     <link rel="stylesheet" href="../styles.css?v=4" />
     <link rel="icon" href="../favicon.ico" sizes="any" />
-    <title>随笔 - Yuqi Wang</title>
+    <title>生活 - Yuqi Wang</title>
     <script>
       try {
         const theme = localStorage.getItem("theme");
@@ -28,7 +28,7 @@
       } catch {}
     </script>
   </head>
-  <body class="notes-page">
+  <body class="life-page">
     <a class="skip-link" href="#main">跳至正文</a>
     <div class="header-sentinel" data-header-sentinel aria-hidden="true"></div>
 
@@ -44,8 +44,8 @@
         <a href="../#about">About</a>
         <a href="../#interests">Interests</a>
         <a href="../#blog">Blog</a>
-        <a href="../life/">Life</a>
-        <a href="./" aria-current="page">Notes</a>
+        <a href="./" aria-current="page">Life</a>
+        <a href="../notes/">Notes</a>
       </nav>
 
       <div class="header-actions">
@@ -77,60 +77,57 @@
         <a href="../#about">About</a>
         <a href="../#interests">Interests</a>
         <a href="../#blog">Blog</a>
-        <a href="../life/">Life / 生活</a>
-        <a href="./" aria-current="page">Notes / 随笔</a>
+        <a href="./" aria-current="page">Life / 生活</a>
+        <a href="../notes/">Notes / 随笔</a>
         <a href="mailto:flairando@gmail.com">Email me</a>
       </nav>
     </header>
 
-    <main class="notes-main" id="main">
-      <section class="notes-hero">
-        <p class="section-label reveal">Personal notes</p>
+    <main class="life-main" id="main">
+      <section class="life-hero">
+        <p class="section-label reveal">Life archive</p>
         <h1 class="reveal">
-          随笔
-          <span>Notes in passing.</span>
+          生活
+          <span>Life, lately.</span>
         </h1>
-        <p class="notes-hero-intro reveal">
-          收留那些尚未长成文章，却不想让它们消失的东西。
+        <p class="life-hero-intro reveal">
+          用文字和照片，留住研究之外不需要被论证的部分。
         </p>
-        <ul class="notes-topics reveal" aria-label="随笔主题">
-          <li>研究之外</li>
-          <li>音乐</li>
-          <li>哲学</li>
-          <li>阅读</li>
-          <li>生活</li>
-        </ul>
       </section>
 
-      <section class="notes-feed" aria-labelledby="notes-title">
-        <header class="notes-feed-heading reveal">
-          <h2 id="notes-title">Latest</h2>
-          <p>不求完整，也不急着得到结论。</p>
+      <section class="life-feed" aria-labelledby="life-feed-title">
+        <header class="life-feed-heading reveal">
+          <h2 id="life-feed-title">Moments</h2>
+          <p>新的在前，旧的慢慢沉淀。</p>
         </header>
 
-        <article class="note-entry reveal">
-          <div class="note-meta">
-            <time datetime="2026-07-27">2026.07.27</time>
-            <span>序</span>
+        <div class="life-stream" data-life-stream aria-live="polite">
+          <div class="life-loading" aria-label="正在载入生活动态">
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
-          <div class="note-body">
-            <h2>留白，也是一种开始。</h2>
-            <p>
-              这里会放一些不必完整的东西：一句突然想到的话、一段听歌后的感受、
-              读书时留下的问题，或者某个普通日子的切片。
-            </p>
-            <p>它们可以很短，也不需要结论。</p>
-          </div>
-        </article>
-
-        <div class="notes-empty reveal">
-          <p>新的随笔会继续出现在这里。</p>
-          <a class="inline-link" href="../">返回主页 <span aria-hidden="true">↗</span></a>
         </div>
+
+        <noscript>
+          <p class="life-state">请启用 JavaScript 查看生活动态。</p>
+        </noscript>
       </section>
     </main>
 
-    <footer class="notes-footer">
+    <dialog class="life-lightbox" data-life-lightbox aria-label="图片预览">
+      <div class="life-lightbox-bar">
+        <span data-life-lightbox-count></span>
+        <button type="button" data-life-lightbox-close aria-label="关闭图片预览">关闭</button>
+      </div>
+      <div class="life-lightbox-stage">
+        <button type="button" data-life-lightbox-prev aria-label="上一张图片">←</button>
+        <img data-life-lightbox-image src="" alt="" />
+        <button type="button" data-life-lightbox-next aria-label="下一张图片">→</button>
+      </div>
+    </dialog>
+
+    <footer class="life-footer">
       <a class="wordmark footer-mark" href="../#top">
         <span class="wordmark-mark">YW</span>
         <span>Yuqi Wang</span>
@@ -140,5 +137,7 @@
     </footer>
 
     <script src="../script.js?v=4"></script>
+    <script src="./posts.js?v=1"></script>
+    <script src="./life.js?v=1"></script>
   </body>
 </html>
