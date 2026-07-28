@@ -1,5 +1,13 @@
 const lifeStream = document.querySelector("[data-life-stream]");
-const lifePosts = Array.isArray(window.LIFE_POSTS) ? window.LIFE_POSTS : [];
+const manualLifePosts = Array.isArray(window.LIFE_POSTS) ? window.LIFE_POSTS : [];
+const managedLifePosts = Array.isArray(window.LIFE_MANAGED_POSTS)
+  ? window.LIFE_MANAGED_POSTS
+  : [];
+const lifePosts = [...manualLifePosts, ...managedLifePosts].sort((left, right) => {
+  const dateOrder = String(right?.date || "").localeCompare(String(left?.date || ""));
+  if (dateOrder) return dateOrder;
+  return Number(right?.issueNumber || 0) - Number(left?.issueNumber || 0);
+});
 const lightbox = document.querySelector("[data-life-lightbox]");
 const lightboxImage = document.querySelector("[data-life-lightbox-image]");
 const lightboxCount = document.querySelector("[data-life-lightbox-count]");

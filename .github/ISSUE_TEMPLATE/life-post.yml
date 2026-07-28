@@ -1,0 +1,44 @@
+name: 发布生活记录
+description: 新建、编辑或隐藏一条生活区动态
+title: "[Life] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        填写日期和文字，并在图片区域上传任意数量的照片。
+        保存后勾选底部的“发布到生活区”即可上线；取消勾选或关闭 Issue 即可隐藏。
+
+  - type: input
+    id: date
+    attributes:
+      label: 日期
+      description: 使用 YYYY-MM-DD 格式
+      placeholder: "2026-07-09"
+    validations:
+      required: true
+
+  - type: textarea
+    id: text
+    attributes:
+      label: 文字
+      description: 支持多段纯文字，段落之间留一个空行
+      placeholder: Seoul Diary
+    validations:
+      required: false
+
+  - type: textarea
+    id: images
+    attributes:
+      label: 图片
+      description: 可直接拖入、粘贴或选择任意数量的 JPG、PNG、GIF 或 WebP 图片
+      placeholder: 在这里上传图片
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: publish
+    attributes:
+      label: 发布
+      options:
+        - label: 发布到生活区
+          required: false
