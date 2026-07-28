@@ -44,6 +44,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
 
+      - name: Wait for GitHub to index new Issues
+        run: sleep 5
+
       - name: Build life feed from Issues
         run: node scripts/sync-life-issues.mjs
         env:
