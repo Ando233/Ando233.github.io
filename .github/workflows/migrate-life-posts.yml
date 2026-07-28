@@ -1,0 +1,75 @@
+name: Migrate Existing Life Posts
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - ".github/workflows/migrate-life-posts.yml"
+      - "scripts/migrate-life-posts.mjs"
+      - "scripts/finalize-life-migration.mjs"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+
+concurrency:
+  group: migrate-existing-life-posts
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out website
+        uses: actions/checkout@v6
+        with:
+          ref: master
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          package-manager-cache: false
+
+      - name: Install image tools
+        run: npm ci
+
+      - name: Create editable Issues
+        run: node scripts/migrate-life-posts.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+
+      - name: Build life feed from Issues
+        run: node scripts/sync-life-issues.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+
+      - name: Remove duplicated manual data
+        run: node scripts/finalize-life-migration.mjs
+
+      - name: Commit migrated life feed
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add life/posts.js life/managed-posts.js assets/life/managed
+          if git diff --cached --quiet; then
+            echo "Life posts are already migrated."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m "Migrate existing life posts to Issues"
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Request GitHub Pages build
+        if: steps.commit.outputs.changed == 'true'
+        run: gh api --method POST "repos/${GITHUB_REPOSITORY}/pages/builds"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
