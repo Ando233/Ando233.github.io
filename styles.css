@@ -1935,6 +1935,11 @@ footer p:last-child {
     gap: 7px;
   }
 
+  .life-gallery[data-count="9"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+  }
+
   .life-gallery[data-count="1"] {
     grid-template-columns: 1fr;
   }
