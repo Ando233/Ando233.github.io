@@ -4,6 +4,25 @@
 */
 window.LIFE_MANAGED_POSTS = [
   {
+    "id": "life-issue-3",
+    "issueNumber": 3,
+    "date": "2026-07-15",
+    "displayDate": "2026.07.15",
+    "text": [
+      "500 Days!"
+    ],
+    "images": [
+      {
+        "src": "../assets/life/managed/issue-3/image-01.webp",
+        "alt": "Image"
+      },
+      {
+        "src": "../assets/life/managed/issue-3/image-02.webp",
+        "alt": "Image"
+      }
+    ]
+  },
+  {
     "id": "life-issue-2",
     "issueNumber": 2,
     "date": "2026-07-09",
