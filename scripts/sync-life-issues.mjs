@@ -90,13 +90,14 @@ const extractImages = (value, issueNumber) => {
     return !(
       (host === "github.com" && new URL(url).pathname.startsWith("/user-attachments/assets/")) ||
       host === "user-images.githubusercontent.com" ||
-      host === "private-user-images.githubusercontent.com"
+      host === "private-user-images.githubusercontent.com" ||
+      host === "ando233.github.io"
     );
   });
 
   if (unsupported) {
     throw new Error(
-      `Issue #${issueNumber}: 图片必须直接上传到 GitHub Issue，不能使用外部图片链接。`
+      `Issue #${issueNumber}: 图片必须直接上传到 GitHub Issue。`
     );
   }
 
@@ -238,10 +239,11 @@ const main = async () => {
   try {
     const issues = await loadIssues();
     const owner = (repository || "Ando233/Ando233.github.io").split("/")[0].toLowerCase();
+    const allowedAuthors = new Set([owner, "github-actions[bot]"]);
     const publishable = issues.filter((issue) => {
       if (issue.pull_request || issue.state === "closed") return false;
       if (!/^\[Life\]\s*/i.test(issue.title || "")) return false;
-      if ((issue.user?.login || "").toLowerCase() !== owner) return false;
+      if (!allowedAuthors.has((issue.user?.login || "").toLowerCase())) return false;
       return isPublished(issue);
     });
 
