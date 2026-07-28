@@ -15,6 +15,7 @@ on:
 permissions:
   contents: write
   issues: read
+  pages: write
 
 concurrency:
   group: sync-life-posts
@@ -50,13 +51,22 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
 
       - name: Commit updated life feed
+        id: commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add life/managed-posts.js assets/life/managed
           if git diff --cached --quiet; then
             echo "Life feed is already up to date."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git commit -m "Sync life posts from Issues"
           git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Request GitHub Pages build
+        if: steps.commit.outputs.changed == 'true'
+        run: gh api --method POST "repos/${GITHUB_REPOSITORY}/pages/builds"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
