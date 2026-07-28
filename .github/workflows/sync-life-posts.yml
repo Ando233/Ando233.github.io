@@ -1,6 +1,13 @@
 name: Sync Life Posts
 
 on:
+  push:
+    branches: [master]
+    paths:
+      - ".github/workflows/sync-life-posts.yml"
+      - "scripts/sync-life-issues.mjs"
+      - "package.json"
+      - "package-lock.json"
   issues:
     types: [opened, edited, closed, reopened, deleted, labeled, unlabeled]
   workflow_dispatch:
@@ -16,7 +23,7 @@ concurrency:
 jobs:
   sync:
     if: >-
-      github.event_name == 'workflow_dispatch' ||
+      github.event_name != 'issues' ||
       startsWith(github.event.issue.title, '[Life]')
     runs-on: ubuntu-latest
 
