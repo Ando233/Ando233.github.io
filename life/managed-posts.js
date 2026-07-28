@@ -4,16 +4,6 @@
 */
 window.LIFE_MANAGED_POSTS = [
   {
-    "id": "life-issue-1",
-    "issueNumber": 1,
-    "date": "2026-07-27",
-    "displayDate": "2026.07.27",
-    "text": [
-      "生活区，开张。之后在这里放些文字和照片。"
-    ],
-    "images": []
-  },
-  {
     "id": "life-issue-2",
     "issueNumber": 2,
     "date": "2026-07-09",
