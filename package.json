@@ -7,9 +7,11 @@
   },
   "scripts": {
     "sync:life": "node scripts/sync-life-issues.mjs",
-    "check": "node --check scripts/sync-life-issues.mjs && node --check life/life.js && node --check life/posts.js && node --check life/managed-posts.js"
+    "sync:blog": "node scripts/sync-blog-issues.mjs",
+    "check": "node --check scripts/sync-life-issues.mjs && node --check scripts/sync-blog-issues.mjs && node --check life/life.js && node --check life/posts.js && node --check life/managed-posts.js"
   },
   "dependencies": {
+    "marked": "17.0.1",
     "sharp": "0.35.3"
   }
 }

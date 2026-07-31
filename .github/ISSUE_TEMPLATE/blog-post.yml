@@ -1,0 +1,78 @@
+name: 发布技术博客
+description: 用 Markdown 写一篇包含图片、代码和文字的技术文章
+title: "[Blog] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issue 标题中 `[Blog]` 后面的文字就是文章标题。
+        正文支持 Markdown。图片可以直接拖入或粘贴，代码请使用三个反引号包裹。
+
+  - type: input
+    id: date
+    attributes:
+      label: 日期
+      description: 使用 YYYY-MM-DD 格式
+      placeholder: "2026-07-31"
+    validations:
+      required: true
+
+  - type: input
+    id: slug
+    attributes:
+      label: 链接名称
+      description: 只使用小写英文字母、数字和短横线，例如 understanding-diffusion
+      placeholder: understanding-diffusion
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: 摘要
+      description: 用一两句话说明文章解决了什么问题，建议不超过 80 个汉字
+      placeholder: 从直觉、公式和实现三个角度理解扩散模型中的噪声预测。
+    validations:
+      required: true
+
+  - type: input
+    id: tags
+    attributes:
+      label: 标签
+      description: 使用英文逗号分隔，建议 2-4 个
+      placeholder: Diffusion, Image Editing, Tutorial
+    validations:
+      required: false
+
+  - type: textarea
+    id: cover
+    attributes:
+      label: 封面图片
+      description: 可选。直接拖入或粘贴一张 JPG、PNG、GIF 或 WebP 图片
+      placeholder: 在这里上传封面图片
+    validations:
+      required: false
+
+  - type: textarea
+    id: content
+    attributes:
+      label: 正文
+      description: 支持标题、列表、链接、引用、表格、代码块和任意数量的图片
+      placeholder: |
+        ## 问题
+
+        先说明要解决的问题。
+
+        ## 方法
+
+        在这里插入文字、代码和图片。
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: publish
+    attributes:
+      label: 发布
+      options:
+        - label: 发布到技术博客
+          required: false

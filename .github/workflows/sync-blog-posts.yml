@@ -1,0 +1,72 @@
+name: Sync Blog Posts
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - ".github/workflows/sync-blog-posts.yml"
+      - "scripts/sync-blog-issues.mjs"
+      - "package.json"
+      - "package-lock.json"
+  issues:
+    types: [opened, edited, closed, reopened, deleted, labeled, unlabeled]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: read
+  pages: write
+
+concurrency:
+  group: sync-blog-posts
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: >-
+      github.event_name != 'issues' ||
+      startsWith(github.event.issue.title, '[Blog]')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out website
+        uses: actions/checkout@v6
+        with:
+          ref: master
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          package-manager-cache: false
+
+      - name: Install blog tools
+        run: npm ci
+
+      - name: Build blog from Issues
+        run: npm run sync:blog
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+
+      - name: Commit updated blog
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add blog assets/blog sitemap.xml index.xml
+          if git diff --cached --quiet; then
+            echo "Blog is already up to date."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m "Sync blog posts from Issues"
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Request GitHub Pages build
+        if: steps.commit.outputs.changed == 'true'
+        run: gh api --method POST "repos/${GITHUB_REPOSITORY}/pages/builds"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

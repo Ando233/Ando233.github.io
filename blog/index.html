@@ -4,21 +4,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f3f4f0" />
-    <meta
-      name="description"
-      content="王宇奇的随笔：研究之外，记录音乐、哲学、阅读、生活和偶然出现的念头。"
-    />
+    <meta name="description" content="王宇奇的技术博客：生成式视觉、模型研究、工程实现与研究复现。" />
     <meta name="author" content="Yuqi Wang" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="随笔 - Yuqi Wang" />
-    <meta property="og:description" content="一些尚未长成文章，却值得留下的东西。" />
-    <meta property="og:url" content="https://ando233.github.io/notes/" />
+    <meta property="og:title" content="技术博客 - Yuqi Wang" />
+    <meta property="og:description" content="关于生成式视觉、模型研究与工程实现的长期技术笔记。" />
+    <meta property="og:url" content="https://ando233.github.io/blog/" />
     <meta property="og:image" content="https://ando233.github.io/assets/og-personal.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="canonical" href="https://ando233.github.io/notes/" />
+    <link rel="canonical" href="https://ando233.github.io/blog/" />
+    <link rel="alternate" type="application/rss+xml" title="Yuqi Wang 技术博客" href="./index.xml" />
+    <link rel="preload" as="image" href="../assets/hero-editorial.webp" type="image/webp" />
     <link rel="stylesheet" href="../styles.css?v=6" />
+    <link rel="stylesheet" href="./blog.css?v=1" />
     <link rel="icon" href="../favicon.ico" sizes="any" />
-    <title>随笔 - Yuqi Wang</title>
+    <title>技术博客 - Yuqi Wang</title>
+
     <script>
       try {
         const theme = localStorage.getItem("theme");
@@ -28,7 +29,7 @@
       } catch {}
     </script>
   </head>
-  <body class="notes-page">
+  <body>
     <a class="skip-link" href="#main">跳至正文</a>
     <div class="header-sentinel" data-header-sentinel aria-hidden="true"></div>
 
@@ -37,88 +38,65 @@
         <span class="wordmark-mark">YW</span>
         <span class="wordmark-name">Yuqi Wang</span>
       </a>
-
       <nav class="desktop-nav" aria-label="Primary navigation">
         <a href="../#research">Research</a>
         <a href="../#experience">Experience</a>
         <a href="../#about">About</a>
         <a href="../#interests">Interests</a>
-        <a href="../blog/">Blog</a>
+        <a href="../blog/" aria-current="page">Blog</a>
         <a href="../life/">Life</a>
-        <a href="./" aria-current="page">Notes</a>
+        <a href="../notes/">Notes</a>
       </nav>
-
       <div class="header-actions">
-        <button
-          class="theme-toggle"
-          type="button"
-          data-theme-toggle
-          aria-label="Switch to dark theme"
-          aria-pressed="false"
-        >
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme" aria-pressed="false">
           <span aria-hidden="true">◐</span>
         </button>
         <a class="header-contact" href="mailto:flairando@gmail.com">Email me</a>
-        <button
-          class="menu-toggle"
-          type="button"
-          data-menu-toggle
-          aria-label="Open navigation"
-          aria-controls="mobile-nav"
-          aria-expanded="false"
-        >
+        <button class="menu-toggle" type="button" data-menu-toggle aria-label="Open navigation" aria-controls="mobile-nav" aria-expanded="false">
           <span></span><span></span>
         </button>
       </div>
-
       <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="Mobile navigation">
         <a href="../#research">Research</a>
         <a href="../#experience">Experience</a>
         <a href="../#about">About</a>
         <a href="../#interests">Interests</a>
-        <a href="../blog/">Blog / 技术博客</a>
+        <a href="../blog/" aria-current="page">Blog / 技术博客</a>
         <a href="../life/">Life / 生活</a>
-        <a href="./" aria-current="page">Notes / 随笔</a>
+        <a href="../notes/">Notes / 随笔</a>
         <a href="mailto:flairando@gmail.com">Email me</a>
       </nav>
     </header>
-
-    <main class="notes-main" id="main">
-      <section class="notes-hero">
-        <h1 class="reveal">随笔</h1>
-        <p class="notes-hero-intro reveal">一些还没长成文章的想法。</p>
+    <main class="blog-main" id="main">
+      <section class="blog-hero">
+        <div class="blog-hero-copy reveal">
+          <h1>技术博客</h1>
+          <p>记录生成式视觉、模型研究、工程实现和复现过程中真正有用的细节。</p>
+        </div>
+        <figure class="reveal">
+          <img src="../assets/hero-editorial.webp" width="1122" height="1402" alt="胶片、光学玻璃、几何图形和蓝色音频波形组成的编辑式静物" fetchpriority="high" />
+        </figure>
       </section>
-
-      <section class="notes-feed" aria-label="随笔列表">
-        <article class="note-entry reveal">
-          <div class="note-meta">
-            <time datetime="2026-07-27">2026.07.27</time>
-            <span>序</span>
+      <section class="blog-feed" aria-label="技术文章">
+        <h2 class="blog-feed-heading reveal">文章</h2>
+        <div class="blog-empty reveal">
+          <div>
+            <h2>第一篇文章正在写作中。</h2>
+            <p>这里会收录完整的技术文章，包括图片、代码、实验记录和参考资料。</p>
           </div>
-          <div class="note-body">
-            <h2>留白，也是一种开始。</h2>
-            <p>
-              记录一句话、一个问题，或者某个普通日子的切片。
-            </p>
-          </div>
-        </article>
-
-        <div class="notes-empty reveal">
-          <p>新的随笔会继续出现在这里。</p>
           <a class="inline-link" href="../">返回主页 <span aria-hidden="true">↗</span></a>
         </div>
       </section>
     </main>
 
-    <footer class="notes-footer">
+    <footer class="blog-footer">
       <a class="wordmark footer-mark" href="../#top">
         <span class="wordmark-mark">YW</span>
         <span>Yuqi Wang</span>
       </a>
-      <p>Research / Music / Philosophy / Life / Notes</p>
+      <p>Research / Blog / Music / Philosophy / Life</p>
       <p>© <span data-year></span> Yuqi Wang</p>
     </footer>
-
     <script src="../script.js?v=4"></script>
   </body>
 </html>

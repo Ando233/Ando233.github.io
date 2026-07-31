@@ -1,0 +1,12 @@
+[
+  {
+    "number": 99,
+    "title": "[Blog] 从直觉到实现：理解扩散模型",
+    "body": "### 日期\n2026-07-31\n\n### 链接名称\nunderstanding-diffusion\n\n### 摘要\n从直觉、公式和实现三个角度理解扩散模型中的噪声预测。\n\n### 标签\nDiffusion, Image Editing, Tutorial\n\n### 封面图片\n![扩散模型文章封面](fixture://hero-editorial.webp)\n\n### 正文\n## 问题\n\n扩散模型为什么能够从噪声中生成图像？这篇测试文章用于验证中文、公式说明、代码块和列表的排版。\n\n## 核心思路\n\n前向过程逐步加入噪声，反向过程学习预测噪声。\n\n![扩散模型的视觉说明](fixture://hero-editorial.webp)\n\n```python\nnoise = torch.randn_like(image)\nnoisy_image = scheduler.add_noise(image, noise, timestep)\n```\n\n## 实现要点\n\n- 明确张量的取值范围。\n- 检查时间步的广播方式。\n- 保存失败案例，而不只保存最佳结果。\n\n> 好的技术文章应该让读者能够复现关键结论。\n\n<script>alert('raw html is escaped')</script>\n\n### 发布\n- [x] 发布到技术博客",
+    "state": "open",
+    "labels": [],
+    "user": {
+      "login": "Ando233"
+    }
+  }
+]
