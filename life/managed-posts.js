@@ -4,6 +4,21 @@
 */
 window.LIFE_MANAGED_POSTS = [
   {
+    "id": "life-issue-4",
+    "issueNumber": 4,
+    "date": "2026-11-03",
+    "displayDate": "2026.11.03",
+    "text": [
+      "小鼠给我做的爱心便当！💞"
+    ],
+    "images": [
+      {
+        "src": "../assets/life/managed/issue-4/image-01.webp",
+        "alt": "小鼠给我做的爱心便当"
+      }
+    ]
+  },
+  {
     "id": "life-issue-3",
     "issueNumber": 3,
     "date": "2026-07-15",
