@@ -19,6 +19,21 @@ window.LIFE_MANAGED_POSTS = [
     ]
   },
   {
+    "id": "life-issue-6",
+    "issueNumber": 6,
+    "date": "2026-11-10",
+    "displayDate": "2026.11.10",
+    "text": [
+      "记录小鼠做的第一个app！"
+    ],
+    "images": [
+      {
+        "src": "../assets/life/managed/issue-6/image-01.webp",
+        "alt": "爪迹旅行的 App Store 页面"
+      }
+    ]
+  },
+  {
     "id": "life-issue-4",
     "issueNumber": 4,
     "date": "2026-11-03",
