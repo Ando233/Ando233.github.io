@@ -468,7 +468,8 @@ button:focus-visible {
 
 .academic-links {
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 6px 20px;
   margin-top: 12px;
   font-weight: 700;
 }
@@ -484,6 +485,56 @@ button:focus-visible {
 .academic-footer a:hover {
   text-decoration: underline;
   text-underline-offset: 0.16em;
+}
+
+.wechat-dialog {
+  width: min(380px, calc(100% - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.wechat-dialog:not([open]) {
+  display: none;
+}
+
+.wechat-dialog::backdrop {
+  background: rgb(0 0 0 / 55%);
+}
+
+.wechat-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.wechat-dialog-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.wechat-dialog-header button {
+  min-height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: transparent;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.wechat-dialog-header button:hover {
+  background: var(--surface);
+}
+
+.wechat-dialog img {
+  width: 100%;
+  height: auto;
 }
 
 .academic-portrait {

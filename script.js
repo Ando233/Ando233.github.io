@@ -42,6 +42,16 @@ systemDark.addEventListener("change", (event) => {
   }
 });
 
+const wechatTrigger = document.querySelector("[data-wechat-trigger]");
+const wechatDialog = document.getElementById("wechat-dialog");
+
+wechatTrigger?.addEventListener("click", (event) => {
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  if (typeof wechatDialog?.showModal !== "function") return;
+  wechatDialog.showModal();
+  event.preventDefault();
+});
+
 const header = document.querySelector("[data-header]");
 const headerSentinel = document.querySelector("[data-header-sentinel]");
 
