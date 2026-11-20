@@ -185,40 +185,18 @@ const readImage = async (url, issueNumber) => {
   return buffer;
 };
 
-const headerMarkup = (prefix, current = "blog") => `
-    <header class="site-header" data-header>
-      <a class="wordmark" href="${prefix}#top" aria-label="Yuqi Wang, home">
-        <span class="wordmark-mark">YW</span>
-        <span class="wordmark-name">Yuqi Wang</span>
-      </a>
-      <nav class="desktop-nav" aria-label="Primary navigation">
-        <a href="${prefix}#research">Research</a>
-        <a href="${prefix}#experience">Experience</a>
-        <a href="${prefix}#about">About</a>
-        <a href="${prefix}#interests">Interests</a>
-        <a href="${prefix}blog/"${current === "blog" ? ' aria-current="page"' : ""}>Blog</a>
+const headerMarkup = (prefix) => `
+    <header class="site-header site-header--sections" data-header>
+      <a class="wordmark" href="${prefix}">Yuqi Wang</a>
+      <nav class="section-nav" aria-label="Primary navigation">
+        <a href="${prefix}">Research</a>
         <a href="${prefix}life/">Life</a>
+        <a href="${prefix}blog/" aria-current="page">Blog</a>
         <a href="${prefix}notes/">Notes</a>
       </nav>
-      <div class="header-actions">
-        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme" aria-pressed="false">
-          <span aria-hidden="true">◐</span>
-        </button>
-        <a class="header-contact" href="mailto:flairando@gmail.com">Email me</a>
-        <button class="menu-toggle" type="button" data-menu-toggle aria-label="Open navigation" aria-controls="mobile-nav" aria-expanded="false">
-          <span></span><span></span>
-        </button>
-      </div>
-      <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="Mobile navigation">
-        <a href="${prefix}#research">Research</a>
-        <a href="${prefix}#experience">Experience</a>
-        <a href="${prefix}#about">About</a>
-        <a href="${prefix}#interests">Interests</a>
-        <a href="${prefix}blog/"${current === "blog" ? ' aria-current="page"' : ""}>Blog / 技术博客</a>
-        <a href="${prefix}life/">Life / 生活</a>
-        <a href="${prefix}notes/">Notes / 随笔</a>
-        <a href="mailto:flairando@gmail.com">Email me</a>
-      </nav>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme" aria-pressed="false">
+        <span aria-hidden="true">◐</span>
+      </button>
     </header>`;
 
 const themeScript = `
@@ -280,8 +258,8 @@ ${posts.map((post) => `          <article class="blog-entry reveal">
     <link rel="canonical" href="${siteUrl}/blog/" />
     <link rel="alternate" type="application/rss+xml" title="Yuqi Wang 技术博客" href="./index.xml" />
     <link rel="preload" as="image" href="../assets/hero-editorial.webp" type="image/webp" />
-    <link rel="stylesheet" href="../styles.css?v=6" />
-    <link rel="stylesheet" href="./blog.css?v=1" />
+    <link rel="stylesheet" href="../styles.css?v=9" />
+    <link rel="stylesheet" href="./blog.css?v=2" />
     <link rel="icon" href="../favicon.ico" sizes="any" />
     <title>技术博客 - Yuqi Wang</title>
 ${themeScript}
@@ -306,7 +284,7 @@ ${headerMarkup("../")}
       </section>
     </main>
 ${footerMarkup("../")}
-    <script src="../script.js?v=4"></script>
+    <script src="../script.js?v=5"></script>
   </body>
 </html>
 `;
@@ -343,8 +321,8 @@ const renderArticle = (post, bodyHtml) => {
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="canonical" href="${canonical}" />
     ${post.cover ? `<link rel="preload" as="image" href="${escapeHtml(post.cover.articlePath)}" type="image/webp" />` : ""}
-    <link rel="stylesheet" href="../../styles.css?v=6" />
-    <link rel="stylesheet" href="../blog.css?v=1" />
+    <link rel="stylesheet" href="../../styles.css?v=9" />
+    <link rel="stylesheet" href="../blog.css?v=2" />
     <link rel="icon" href="../../favicon.ico" sizes="any" />
     <title>${escapeHtml(post.title)} - Yuqi Wang</title>
 ${themeScript}
@@ -394,7 +372,7 @@ ${headerMarkup("../../")}
 ${footerMarkup("../../")}
     <script src="../../highlight.min.js"></script>
     <script>window.hljs?.highlightAll();</script>
-    <script src="../../script.js?v=4"></script>
+    <script src="../../script.js?v=5"></script>
   </body>
 </html>
 `;

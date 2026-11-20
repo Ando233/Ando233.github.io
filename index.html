@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f3f4f0" />
+    <meta name="theme-color" content="#fdfefe" />
     <meta
       name="description"
       content="The personal website of Yuqi Wang: visual intelligence research, open source, music, philosophy, life, and notes."
@@ -20,8 +20,8 @@
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="canonical" href="https://ando233.github.io/" />
     <link rel="alternate" type="application/rss+xml" title="Yuqi Wang 技术博客" href="./blog/index.xml" />
-    <link rel="preload" as="image" href="./assets/hero-editorial.webp" type="image/webp" />
-    <link rel="stylesheet" href="./styles.css?v=6" />
+    <link rel="preload" as="image" href="./assets/portrait.webp" type="image/webp" />
+    <link rel="stylesheet" href="./styles.css?v=9" />
     <link rel="icon" href="./favicon.ico" sizes="any" />
     <title>Yuqi Wang - Visual Intelligence Researcher</title>
     <script>
@@ -60,361 +60,211 @@
       }
     </script>
   </head>
-  <body>
+  <body class="academic-page">
     <a class="skip-link" href="#main">Skip to content</a>
     <div class="header-sentinel" data-header-sentinel aria-hidden="true"></div>
 
-    <header class="site-header" data-header>
-      <a class="wordmark" href="#top" aria-label="Yuqi Wang, home">
-        <span class="wordmark-mark">YW</span>
-        <span class="wordmark-name">Yuqi Wang</span>
-      </a>
-
-      <nav class="desktop-nav" aria-label="Primary navigation">
-        <a href="#research">Research</a>
-        <a href="#experience">Experience</a>
-        <a href="#about">About</a>
-        <a href="#interests">Interests</a>
-        <a href="./blog/">Blog</a>
+    <header class="site-header site-header--sections" data-header>
+      <a class="wordmark" href="./">Yuqi Wang</a>
+      <nav class="section-nav" aria-label="Primary navigation">
+        <a href="./" aria-current="page">Research</a>
         <a href="./life/">Life</a>
+        <a href="./blog/">Blog</a>
         <a href="./notes/">Notes</a>
       </nav>
-
-      <div class="header-actions">
-        <button
-          class="theme-toggle"
-          type="button"
-          data-theme-toggle
-          aria-label="Switch to dark theme"
-          aria-pressed="false"
-        >
-          <span aria-hidden="true">◐</span>
-        </button>
-        <a class="header-contact" href="mailto:flairando@gmail.com">Email me</a>
-        <button
-          class="menu-toggle"
-          type="button"
-          data-menu-toggle
-          aria-label="Open navigation"
-          aria-controls="mobile-nav"
-          aria-expanded="false"
-        >
-          <span></span><span></span>
-        </button>
-      </div>
-
-      <nav class="mobile-nav" id="mobile-nav" data-mobile-nav aria-label="Mobile navigation">
-        <a href="#research">Research</a>
-        <a href="#experience">Experience</a>
-        <a href="#about">About</a>
-        <a href="#interests">Interests</a>
-        <a href="./blog/">Blog / 技术博客</a>
-        <a href="./life/">Life / 生活</a>
-        <a href="./notes/">Notes / 随笔</a>
-        <a href="mailto:flairando@gmail.com">Email me</a>
-      </nav>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme" aria-pressed="false">
+        <span aria-hidden="true">◐</span>
+      </button>
     </header>
 
-    <main id="main">
-      <section class="hero" id="top">
-        <div class="hero-copy">
-          <h1 class="reveal">
-            Yuqi Wang
-            <span lang="zh-CN">王宇奇</span>
-          </h1>
-          <p class="hero-intro reveal">
-            I build controllable generative systems for images and video.
-          </p>
-          <div class="hero-actions reveal">
-            <a class="button button-primary" href="#research">View research</a>
-            <a class="button button-quiet" href="https://github.com/Ando233" target="_blank" rel="noreferrer">
-              GitHub <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </div>
-
-        <figure class="hero-visual reveal">
-          <div class="hero-image-wrap">
-            <img
-              src="./assets/hero-editorial.webp"
-              width="1122"
-              height="1402"
-              alt="Editorial still life of film strips, optical glass, geometric studies, and a cobalt audio waveform"
-              fetchpriority="high"
-            />
-          </div>
-        </figure>
-      </section>
-
-      <section class="section research" id="research">
-        <header class="section-intro reveal">
-          <h2>Publications</h2>
-        </header>
-
-        <div class="publication-list">
-          <article class="publication-row reveal">
-            <figure class="publication-media">
-              <img
-                src="./assets/unicorn-architecture.png"
-                width="2079"
-                height="600"
-                alt="Unicorn architecture with shot-aware planning, in-context keyframe editing, and keyframe-anchored video editing"
-                loading="lazy"
-              />
-            </figure>
-            <div class="publication-copy">
-              <div class="publication-meta">
-                <span>AAAI 2027 / Under review</span>
-                <span>First Author</span>
-              </div>
-              <h3>Unicorn: Controllable Multi-Shot Video Editing Framework via Shot-wise Keyframe Anchors</h3>
-              <p>Yuqi Wang et al.</p>
-            </div>
-          </article>
-
-          <article class="publication-row reveal">
-            <figure class="publication-media">
-              <img
-                src="./assets/sredit-architecture.png"
-                width="2102"
-                height="1067"
-                alt="SREdit architecture with semantic instruction atomization, aligned self-reward, and spatial reward reweighting"
-                loading="lazy"
-              />
-            </figure>
-            <div class="publication-copy">
-              <div class="publication-meta">
-                <span>ACM MM 2026 / Poster</span>
-                <span>First Author</span>
-              </div>
-              <h3>SREdit: A Self-Rewarding Framework with Intrinsically Aligned Critic for Image Editing</h3>
-              <p>Yuqi Wang et al.</p>
-              <a class="inline-link" href="./papers/sredit.pdf" target="_blank" rel="noreferrer">
-                Paper <span aria-hidden="true">↗</span>
-              </a>
-            </div>
-          </article>
-
-          <article class="publication-row reveal">
-            <figure class="publication-media">
-              <img
-                src="./assets/fedpdg-architecture.png"
-                width="1722"
-                height="1064"
-                alt="FedPDG architecture with personalized diffusion generation, prediction discrepancy selection, and client data augmentation"
-                loading="lazy"
-              />
-            </figure>
-            <div class="publication-copy">
-              <div class="publication-meta">
-                <span>ICML 2026 / Poster</span>
-                <span>First Author</span>
-              </div>
-              <h3>FedPDG: Prediction Discrepancy-Guided Data Generation for Heterogeneous Federated Learning</h3>
-              <p>Yuqi Wang et al.</p>
-              <a class="inline-link" href="./papers/fedpdg.pdf" target="_blank" rel="noreferrer">
-                Paper <span aria-hidden="true">↗</span>
-              </a>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="section experience" id="experience">
-        <div class="experience-layout">
-          <header class="experience-heading reveal">
-            <h2>Experience</h2>
-          </header>
-
-          <div class="role-list">
-            <article class="role reveal">
-              <div class="role-meta">
-                <time>2026.05 - Present</time>
-                <span>Beijing</span>
-              </div>
-              <div class="role-body">
-                <h3>Kuaishou <span lang="zh-CN">快手</span></h3>
-                <p class="role-position">AIGC Algorithm Intern / Commercial Technology, Safety & Ecosystem</p>
-                <p>
-                  Researching controllable multi-shot video editing and building MultiShotBench.
-                </p>
-              </div>
-            </article>
-
-            <article class="role reveal">
-              <div class="role-meta">
-                <time>2024.10 - 2026.05</time>
-                <span>Beijing</span>
-              </div>
-              <div class="role-body">
-                <h3>Meituan <span lang="zh-CN">美团</span></h3>
-                <p class="role-position">AIGC Algorithm Intern / Digital Human & Creative Generation</p>
-                <p>
-                  Built image composition and automatic video editing systems serving 1,000+ videos daily.
-                </p>
-              </div>
-            </article>
-          </div>
-        </div>
-
-        <div class="open-source reveal" aria-labelledby="open-source-title">
-          <div class="open-source-heading">
-            <h3 id="open-source-title">Open source</h3>
-          </div>
-          <div class="contribution-grid">
-            <a
-              class="contribution contribution-primary"
-              href="https://github.com/huggingface/diffusers/pull/13046"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span class="contribution-repo">huggingface/diffusers</span>
-              <strong>Diffusion Transformers with Representation Autoencoders</strong>
-              <p>Reproduced and integrated the RAE autoencoder. PR #13046 was merged.</p>
-              <span class="contribution-link">PR #13046 <span aria-hidden="true">↗</span></span>
-            </a>
-
-            <a
-              class="contribution"
-              href="https://github.com/duoan/TorchCode"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span class="contribution-repo">duoan/TorchCode</span>
-              <strong>Core generative model modules</strong>
-              <p>Maintain GRPO loss, DiT Block, and other generative model components.</p>
-              <span class="contribution-link">Repository <span aria-hidden="true">↗</span></span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section class="section about" id="about">
-        <div class="about-statement reveal">
-          <h2>I study how models see, edit, and preserve.</h2>
-        </div>
-
-        <div class="about-layout">
-          <div class="about-copy reveal">
-            <p>
-              I’m a master’s student in Software Engineering at <strong>Beihang University</strong>,
-              advised by Prof. Jianwei Niu in the LDMC Lab. I work on diffusion, multimodal models,
-              and reinforcement learning for visual generation.
-            </p>
-          </div>
-
-          <div class="education reveal">
-            <h3>Education</h3>
-            <div class="education-item">
-              <time>2024-2027</time>
-              <strong>M.S. in Software Engineering</strong>
-              <p>Beihang University / LDMC Lab</p>
-            </div>
-            <div class="education-item">
-              <time>2020-2024</time>
-              <strong>B.E. in Software Engineering</strong>
-              <p>Beihang University / Outstanding Graduate</p>
-            </div>
-          </div>
-        </div>
-
-      </section>
-
-      <section class="section interests" id="interests">
-        <header class="interests-heading reveal">
-          <h2>Interests</h2>
-        </header>
-
-        <div class="interest-grid">
-          <article class="interest-card interest-music reveal">
-            <figure>
-              <img
-                src="./assets/og-personal.png"
-                width="1200"
-                height="630"
-                alt="Yuqi Wang brand artwork combining circular research diagrams and an audio waveform"
-                loading="lazy"
-              />
-            </figure>
-            <div>
-              <h3>R&B and hip-hop</h3>
-              <p>Music, production, and sampling.</p>
-            </div>
-          </article>
-
-          <article class="interest-card interest-philosophy reveal">
-            <h3>Philosophy</h3>
-            <p class="interest-large">Mind. Freedom. Meaning. Action.</p>
-          </article>
-
-          <article class="interest-card interest-credo reveal">
-            <blockquote lang="zh-CN">应无所住，<br />而生其心</blockquote>
-          </article>
-        </div>
-      </section>
-
-      <section class="section life-teaser" id="life">
-        <div class="life-teaser-copy reveal">
-          <h2 lang="zh-CN">生活</h2>
-          <p lang="zh-CN">随手记些日常。</p>
-          <a class="button button-primary" href="./life/">
-            看看 <span aria-hidden="true">↗</span>
-          </a>
-        </div>
-
-        <a class="life-teaser-entry reveal" href="./life/" aria-label="进入生活区">
-          <figure>
-            <img
-              src="./assets/og-personal.png"
-              width="1200"
-              height="630"
-              alt="Circular research forms and a cobalt audio waveform"
-              loading="lazy"
-            />
-          </figure>
-          <div>
-            <time datetime="2026-07-27">2026.07.27</time>
-            <p lang="zh-CN">生活区，开张。</p>
-          </div>
-        </a>
-      </section>
-
-      <section class="section writing" id="blog">
-        <header class="section-intro reveal">
-          <h2 lang="zh-CN">技术博客</h2>
-        </header>
-
-        <a class="note-preview reveal" href="./blog/">
-          <div class="note-preview-meta">
-            <span>Research</span>
-            <span>Engineering</span>
-          </div>
-          <div class="note-preview-body">
-            <h3 lang="zh-CN">生成式视觉、模型研究与工程实现。</h3>
-          </div>
-          <span class="note-preview-link">查看文章 <span aria-hidden="true">↗</span></span>
-        </a>
-      </section>
-
-      <section class="section contact reveal" id="contact">
+    <main class="academic-main" id="main">
+      <section class="academic-intro" id="top" aria-labelledby="name">
         <div>
-          <h2>Say hello.</h2>
+          <h1 id="name">Yuqi Wang <span lang="zh-CN">王宇奇</span></h1>
+          <p class="academic-affiliation">M.S. Student · Beihang University</p>
+          <p class="academic-bio">
+            I build controllable generative systems for images and video. I work with Prof. Jianwei Niu
+            in the LDMC Lab, focusing on diffusion models, multimodal learning, and reinforcement
+            learning for visual generation.
+          </p>
+          <div class="academic-links" id="contact">
+            <a href="mailto:flairando@gmail.com">Email</a>
+            <a href="https://github.com/Ando233">GitHub</a>
+          </div>
         </div>
-        <div class="contact-actions">
-          <a class="button button-primary" href="mailto:flairando@gmail.com">Email me</a>
+        <img
+          class="academic-portrait"
+          src="./assets/portrait.webp"
+          width="720"
+          height="720"
+          alt="Yuqi Wang at a waterfront café"
+          fetchpriority="high"
+        />
+      </section>
+
+      <a class="life-preview" id="life" href="./life/" data-life-preview lang="zh-CN">
+        <strong>最近生活</strong>
+        <span class="life-preview-link">去生活区 <span aria-hidden="true">→</span></span>
+      </a>
+
+      <section class="publications" id="research" aria-labelledby="publications-title">
+        <h2 id="publications-title">Selected Publications</h2>
+        <p class="publication-key">* Equal contribution &nbsp;·&nbsp; † Corresponding author</p>
+        <div class="publication-list">
+          <article class="publication-entry" id="tango">
+            <img src="./assets/tango-architecture.png" alt="TANGO overview showing source-aware routing, target semantic planning, and T5 conditioning" loading="lazy" decoding="async" />
+            <div>
+              <h3>How to Make MLLMs More Effective for Unified Video Generation and Editing?</h3>
+              <p class="publication-authors">
+                <a href="https://openreview.net/profile?id=~Yuqi_Wang13"><strong>Yuqi Wang<sup>1,*</sup></strong></a>,
+                <a href="https://openreview.net/profile?id=~Shiqiang_Tian1">Shiqiang Tian<sup>2,*</sup></a>,
+                <a href="https://openreview.net/profile?id=~Jishun_Liu3">Jishun Liu<sup>3</sup></a>,
+                <a href="https://openreview.net/profile?id=~Yuan_Yuan28">Yuan Yuan<sup>3</sup></a>,
+                <a href="https://openreview.net/profile?id=~Zhaohan_Gong1">Zhaohan Gong<sup>3</sup></a>,
+                <a href="https://openreview.net/profile?id=~Dongxu_Wang4">Dongxu Wang<sup>3</sup></a>
+              </p>
+              <p class="publication-links"><a href="./papers/tango.pdf">[Paper]</a></p>
+              <p class="publication-summary">TL;DR: TANGO routes source visuals and plans target semantics with an MLLM, then adds T5 conditioning for unified video generation and editing.</p>
+            </div>
+          </article>
+          <article class="publication-entry" id="unicorn">
+            <img src="./assets/unicorn-architecture.png" alt="Unicorn method overview" loading="lazy" decoding="async" />
+            <div>
+              <h3>Unicorn: Controllable Multi-Shot Video Editing Framework via Shot-wise Keyframe Anchors</h3>
+              <p class="publication-authors">
+                <a href="https://openreview.net/profile?id=~Jishun_Liu3">Jishun Liu<sup aria-label="Co-first author">*</sup></a>,
+                <a href="https://openreview.net/profile?id=~Yuqi_Wang13"><strong>Yuqi Wang<sup aria-label="Co-first author">*</sup></strong></a>,
+                <a href="https://openreview.net/profile?id=~Shiqiang_Tian1">Shiqiang Tian</a>,
+                <a href="https://openreview.net/profile?id=~Zheng_Yang10">Zheng Yang</a>,
+                <a href="https://openreview.net/profile?id=~Dongxu_Wang4">Dongxu Wang</a>,
+                <a href="https://openreview.net/profile?id=~Zhaohan_Gong1">Zhaohan Gong</a>,
+                <a href="https://openreview.net/profile?id=~Yuan_Yuan28">Yuan Yuan</a>,
+                <a href="https://openreview.net/profile?id=~Philip_pu-wei_Li1">Philip pu-wei Li</a>
+              </p>
+              <p class="publication-links"><a href="./papers/unicorn.pdf">[Paper]</a></p>
+              <p class="publication-summary">TL;DR: Shot-wise keyframe anchors guide multi-shot video editing and help preserve identity across shots.</p>
+            </div>
+          </article>
+          <article class="publication-entry publication-featured" id="sredit">
+            <img src="./assets/sredit-architecture.png" alt="SREdit method overview" loading="lazy" decoding="async" />
+            <div>
+              <h3><a href="./papers/sredit.pdf">SREdit: A Self-Rewarding Framework with Intrinsically Aligned Critic for Image Editing</a></h3>
+              <p class="publication-authors">
+                <strong>Yuqi Wang</strong>,
+                <span>Qian Bao</span>,
+                <span>Yingying Ao</span>,
+                <span>Ting Zhang</span>,
+                <span>Haotian Yang</span>,
+                <span>Jianwei Niu</span>,
+                <span>Xuefeng Liu</span>,
+                <span>Xudong Liu</span>,
+                <span>Huaiwen Wu</span>,
+                <span>Jianping Fang</span>,
+                <span>Jintao Fang</span>
+              </p>
+              <p class="publication-links"><a href="./papers/sredit.pdf">[Paper]</a></p>
+              <p class="publication-summary">TL;DR: An image-editing model evaluates its own edits against the instructions it inferred, reducing semantic drift during reinforcement learning.</p>
+              <p class="publication-venue">ACM MM 2026 · Poster</p>
+            </div>
+          </article>
+          <article class="publication-entry" id="fedpdg">
+            <img src="./assets/fedpdg-architecture.png" alt="FedPDG method overview" loading="lazy" decoding="async" />
+            <div>
+              <h3><a href="https://proceedings.mlr.press/v306/wang26ga.html">FedPDG: Prediction Discrepancy–Guided Data Generation for Heterogeneous Federated Learning</a></h3>
+              <p class="publication-authors">
+                <strong>Yuqi Wang<sup>*</sup></strong>,
+                <span>Jianwei Niu</span>,
+                <span>Xinghao Wu<sup>*</sup></span>,
+                <span>Xuefeng Liu<sup>†</sup></span>,
+                <span>Xin Hao</span>
+              </p>
+              <div class="publication-links">
+                <a href="./papers/fedpdg.pdf">[Paper]</a>
+                <span aria-hidden="true">/</span>
+                <details>
+                  <summary>[BibTeX]</summary>
+                  <pre>@inproceedings{pmlr-v306-wang26ga,
+  title = {{F}ed{PDG}: Prediction Discrepancy–Guided Data Generation for Heterogeneous Federated Learning},
+  author = {Wang, Yuqi and Niu, Jianwei and Wu, Xinghao and Liu, Xuefeng and Hao, Xin},
+  booktitle = {Proceedings of the 43rd International Conference on Machine Learning},
+  pages = {129281--129300},
+  year = {2026},
+  volume = {306},
+  series = {Proceedings of Machine Learning Research},
+  publisher = {PMLR},
+  url = {https://proceedings.mlr.press/v306/wang26ga.html}
+}</pre>
+                </details>
+              </div>
+              <p class="publication-summary">TL;DR: Prediction gaps between local and global models guide diffusion-based data generation for heterogeneous clients.</p>
+              <p class="publication-venue">ICML 2026 · Poster</p>
+            </div>
+          </article>
         </div>
       </section>
+
+      <div class="research-history">
+        <section id="experience" aria-labelledby="experience-title">
+          <h2 id="experience-title">Experience</h2>
+          <div class="history-entry">
+            <time>2026.05–Present</time>
+            <div>
+              <h3>Kuaishou <span lang="zh-CN">快手</span></h3>
+              <p>AIGC Algorithm Intern</p>
+              <p>Controllable multi-shot video editing and MultiShotBench.</p>
+            </div>
+          </div>
+          <div class="history-entry">
+            <time>2024.10–2026.05</time>
+            <div>
+              <h3>Meituan <span lang="zh-CN">美团</span></h3>
+              <p>AIGC Algorithm Intern</p>
+              <p>Image composition and automatic video editing.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="about" aria-labelledby="education-title">
+          <h2 id="education-title">Education</h2>
+          <div class="history-entry">
+            <time>2024–2027</time>
+            <div>
+              <h3>Beihang University</h3>
+              <p>M.S. in Software Engineering · LDMC Lab</p>
+            </div>
+          </div>
+          <div class="history-entry">
+            <time>2020–2024</time>
+            <div>
+              <h3>Beihang University</h3>
+              <p>B.E. in Software Engineering · Outstanding Graduate</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section class="research-extra" aria-labelledby="open-source-title">
+        <h2 id="open-source-title">Open Source</h2>
+        <ul>
+          <li><a href="https://github.com/huggingface/diffusers/pull/13046">huggingface/diffusers</a> · Integrated the RAE autoencoder for diffusion transformers (PR #13046).</li>
+          <li><a href="https://github.com/duoan/TorchCode">duoan/TorchCode</a> · Maintain GRPO loss, DiT blocks, and other generative model components.</li>
+        </ul>
+      </section>
+
+      <details class="research-extra" id="interests">
+        <summary>Interests</summary>
+        <p>R&amp;B and hip-hop, music production, sampling, and philosophy. <span lang="zh-CN">应无所住，而生其心。</span></p>
+      </details>
     </main>
 
-    <footer>
-      <a class="wordmark footer-mark" href="#top">
-        <span class="wordmark-mark">YW</span>
-        <span>Yuqi Wang</span>
-      </a>
-      <p>Research / Music / Philosophy / Life / Notes</p>
-      <p>© <span data-year></span> Yuqi Wang</p>
+    <footer class="academic-footer">
+      <p>© <span data-year>2026</span> Yuqi Wang</p>
+      <a id="blog" href="./blog/" lang="zh-CN">技术博客</a>
     </footer>
 
-    <script src="./script.js?v=4"></script>
+    <script src="./script.js?v=5"></script>
+    <script src="./life/posts.js?v=3"></script>
+    <script src="./life/managed-posts.js?v=2"></script>
+    <script src="./life/life.js?v=3"></script>
   </body>
 </html>

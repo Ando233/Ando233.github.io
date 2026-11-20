@@ -17,7 +17,7 @@ const applyTheme = (theme) => {
   const isDark = theme === "dark";
   document
     .querySelector('meta[name="theme-color"]')
-    ?.setAttribute("content", isDark ? "#111412" : "#f3f4f0");
+    ?.setAttribute("content", getComputedStyle(document.body).getPropertyValue("--bg").trim());
   themeToggle?.setAttribute("aria-pressed", String(isDark));
   themeToggle?.setAttribute("aria-label", `Switch to ${isDark ? "light" : "dark"} theme`);
 };

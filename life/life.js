@@ -3,7 +3,10 @@ const manualLifePosts = Array.isArray(window.LIFE_POSTS) ? window.LIFE_POSTS : [
 const managedLifePosts = Array.isArray(window.LIFE_MANAGED_POSTS)
   ? window.LIFE_MANAGED_POSTS
   : [];
-const lifePosts = [...manualLifePosts, ...managedLifePosts].sort((left, right) => {
+const lifePosts = [...manualLifePosts, ...managedLifePosts].filter((post) => post && (
+  (Array.isArray(post.text) && post.text.some(Boolean)) ||
+  (Array.isArray(post.images) && post.images.some((image) => image?.src))
+)).sort((left, right) => {
   const dateOrder = String(right?.date || "").localeCompare(String(left?.date || ""));
   if (dateOrder) return dateOrder;
   return Number(right?.issueNumber || 0) - Number(left?.issueNumber || 0);
@@ -22,6 +25,41 @@ const makeElement = (tagName, className, text) => {
   if (className) element.className = className;
   if (text) element.textContent = text;
   return element;
+};
+
+const renderLifePreview = () => {
+  const preview = document.querySelector("[data-life-preview]");
+  const post = lifePosts[0];
+  if (!preview || !post) return;
+
+  const lifeUrl = new URL(preview.href);
+  const content = makeElement("span", "life-preview-content");
+  const firstImage = Array.isArray(post.images) && post.images.find((image) => image?.src);
+  if (firstImage) {
+    const image = makeElement("img", "life-preview-image");
+    image.src = new URL(firstImage.src, lifeUrl).href;
+    image.alt = "";
+    image.width = 76;
+    image.height = 52;
+    content.append(image);
+  }
+
+  const caption = makeElement("span", "life-preview-caption");
+  const firstParagraph = Array.isArray(post.text) && post.text.find(Boolean);
+  if (firstParagraph) caption.append(makeElement("span", "life-preview-text", firstParagraph));
+  const date = post.displayDate || post.date;
+  if (date) {
+    const time = makeElement("time", "", date);
+    if (post.date) time.dateTime = post.date;
+    caption.append(time);
+  }
+  content.append(caption);
+  preview.insertBefore(content, preview.querySelector(".life-preview-link"));
+
+  if (post.id) {
+    lifeUrl.hash = post.id;
+    preview.href = lifeUrl.href;
+  }
 };
 
 const showLifeState = (message, state = "empty") => {
@@ -68,9 +106,7 @@ const renderLife = () => {
   const fragment = document.createDocumentFragment();
 
   lifePosts.forEach((post) => {
-    if (!post || (!Array.isArray(post.text) && !Array.isArray(post.images))) return;
-
-    const article = makeElement("article", "life-entry reveal");
+    const article = makeElement("article", "life-entry");
     if (post.id) article.id = post.id;
 
     const meta = makeElement("div", "life-entry-meta");
@@ -81,12 +117,12 @@ const renderLife = () => {
 
     const body = makeElement("div", "life-entry-body");
     const copy = makeElement("div", "life-entry-copy");
-    (post.text || []).forEach((paragraph) => {
+    (Array.isArray(post.text) ? post.text : []).forEach((paragraph) => {
       if (paragraph) copy.append(makeElement("p", "", paragraph));
     });
     if (copy.childElementCount) body.append(copy);
 
-    const images = (post.images || []).filter((image) => image && image.src);
+    const images = (Array.isArray(post.images) ? post.images : []).filter((image) => image?.src);
     if (images.length) {
       const gallery = makeElement("div", "life-gallery");
       gallery.dataset.count = String(images.length);
@@ -125,22 +161,12 @@ const renderLife = () => {
     fragment.append(article);
   });
 
-  if (!fragment.childNodes.length) {
-    showLifeState("生活动态暂时无法显示。", "error");
-    return;
-  }
-
   lifeStream.replaceChildren(fragment);
-
-  if (window.initializeReveals) {
-    window.initializeReveals(lifeStream.querySelectorAll(".reveal"));
-  } else {
-    lifeStream.querySelectorAll(".reveal").forEach((item) => item.classList.add("visible"));
-  }
 };
 
 try {
-  renderLife();
+  if (lifeStream) renderLife();
+  else renderLifePreview();
 } catch {
   showLifeState("生活动态暂时无法显示，请稍后再来。", "error");
 }
