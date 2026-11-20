@@ -27,41 +27,6 @@ const makeElement = (tagName, className, text) => {
   return element;
 };
 
-const renderLifePreview = () => {
-  const preview = document.querySelector("[data-life-preview]");
-  const post = lifePosts[0];
-  if (!preview || !post) return;
-
-  const lifeUrl = new URL(preview.href);
-  const content = makeElement("span", "life-preview-content");
-  const firstImage = Array.isArray(post.images) && post.images.find((image) => image?.src);
-  if (firstImage) {
-    const image = makeElement("img", "life-preview-image");
-    image.src = new URL(firstImage.src, lifeUrl).href;
-    image.alt = "";
-    image.width = 76;
-    image.height = 52;
-    content.append(image);
-  }
-
-  const caption = makeElement("span", "life-preview-caption");
-  const firstParagraph = Array.isArray(post.text) && post.text.find(Boolean);
-  if (firstParagraph) caption.append(makeElement("span", "life-preview-text", firstParagraph));
-  const date = post.displayDate || post.date;
-  if (date) {
-    const time = makeElement("time", "", date);
-    if (post.date) time.dateTime = post.date;
-    caption.append(time);
-  }
-  content.append(caption);
-  preview.insertBefore(content, preview.querySelector(".life-preview-link"));
-
-  if (post.id) {
-    lifeUrl.hash = post.id;
-    preview.href = lifeUrl.href;
-  }
-};
-
 const showLifeState = (message, state = "empty") => {
   if (!lifeStream) return;
   const wrapper = makeElement("div", `life-state life-state-${state}`);
@@ -165,8 +130,7 @@ const renderLife = () => {
 };
 
 try {
-  if (lifeStream) renderLife();
-  else renderLifePreview();
+  renderLife();
 } catch {
   showLifeState("生活动态暂时无法显示，请稍后再来。", "error");
 }
