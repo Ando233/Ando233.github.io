@@ -192,7 +192,7 @@ const headerMarkup = (prefix) => `
         <a href="${prefix}">Research</a>
         <a href="${prefix}life/">Life</a>
         <a href="${prefix}blog/" aria-current="page">Blog</a>
-        <a href="${prefix}notes/">Notes</a>
+        <a href="${prefix}interests/">Interests</a>
       </nav>
       <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme" aria-pressed="false">
         <span aria-hidden="true">◐</span>
@@ -401,6 +401,7 @@ const renderSitemap = (posts) => `<?xml version="1.0" encoding="UTF-8"?>
   <url><loc>${siteUrl}/</loc></url>
   <url><loc>${siteUrl}/blog/</loc></url>
   <url><loc>${siteUrl}/life/</loc></url>
+  <url><loc>${siteUrl}/interests/</loc></url>
   <url><loc>${siteUrl}/notes/</loc></url>
 ${posts.map((post) => `  <url><loc>${siteUrl}/blog/${post.slug}/</loc><lastmod>${post.date}</lastmod></url>`).join("\n")}
 </urlset>

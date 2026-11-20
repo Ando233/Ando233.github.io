@@ -424,12 +424,15 @@ button:focus-visible {
 }
 
 .academic-main,
-.academic-footer {
+.academic-footer,
+.interests-main,
+.interests-footer {
   width: min(var(--academic-width), calc(100% - 2 * var(--page-gutter)));
   margin-inline: auto;
 }
 
-.academic-main {
+.academic-main,
+.interests-main {
   padding: calc(var(--header) + clamp(32px, 5vw, 60px)) 0 46px;
 }
 
@@ -548,7 +551,7 @@ button:focus-visible {
 }
 
 .academic-main h2,
-.research-extra summary {
+.interests-main h2 {
   margin: 0;
   font-size: clamp(1.55rem, 3vw, 1.9rem);
   font-weight: 400;
@@ -704,12 +707,36 @@ button:focus-visible {
   padding-inline-start: 1.15em;
 }
 
-.research-extra summary {
-  cursor: pointer;
+.interests-main {
+  min-height: calc(100dvh - 70px);
+}
+
+.interests-main h1 {
+  margin: 0 0 28px;
+  font-size: var(--type-page);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.interest-section {
+  display: grid;
+  grid-template-columns: minmax(125px, 0.35fr) minmax(0, 1fr);
+  gap: 12px 28px;
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+}
+
+.interest-section p {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--serif);
+  font-size: 1.125rem;
+  line-height: 1.65;
 }
 
 .academic-footer,
-.life-footer {
+.life-footer,
+.interests-footer {
   display: flex;
   justify-content: space-between;
   padding: 16px 0 28px;
@@ -724,6 +751,10 @@ button:focus-visible {
 
   .academic-portrait {
     width: min(38vw, 158px);
+  }
+
+  .interest-section {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .publication-entry {
